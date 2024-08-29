@@ -19,11 +19,11 @@ const Router = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/write" element={<Write />} />
           <Route path="/mypage" element={<Mypage />}>
-            <Route path="/mymodify" element={<Mymodify />} />
+            <Route path="mymodify" element={<Mymodify />} />
           </Route>
 
           <Route path="/detail/:id" element={<Detail />}>
-            <Route path="/modify" element={<Modify />} />
+            <Route path="modify" element={<Modify />} />
           </Route>
         </Route>
       </Routes>
