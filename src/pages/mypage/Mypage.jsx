@@ -11,10 +11,10 @@ const Mypage = () => {
   useEffect(() => {
     const fetchData = async () => {
       // 테스트계정 로그인을 위한 소스
-      // const { data, error } = await supabase.auth.signInWithPassword({
-      //   email: 'test@test.com',
-      //   password: '1q2w3e4r5t'
-      // });
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: 'test@test.com',
+        password: '1q2w3e4r%'
+      });
 
       const {
         data: { user }

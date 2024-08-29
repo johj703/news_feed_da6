@@ -8,7 +8,12 @@ const Mymodify = () => {
   const { pathname } = useLocation();
 
   const [userInfo, setUserInfo] = useState({}); // Input value에 따라 사용자 정보 저장
-  const [pwdChk, setPwdChk] = useState('none'); // 비밀번호 안내문구 none/block
+  const [pwdChk, setPwdChk] = useState(false); // 비밀번호 안내문구 none/block
+
+  // 비밀번호 규칙 유효성검사 (8글자 이상, 영문, 숫자, 특수문자 사용)
+  const strongPassword = (password) => {
+    return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(password);
+  };
 
   // 인풋 value 변경 저장
   const infoChange = (e) => {
@@ -17,14 +22,19 @@ const Mymodify = () => {
       ...userInfo,
       [id]: value
     });
+
+    if (!strongPassword(pwdRef.current.value)) {
+      return setPwdChk('공백없이 8글자 이상, 영문, 숫자, 특수문자(@$!%*#?&)를 사용해주세요.');
+    } else if (pwdRef.current.value !== pwdChkRef.current.value) {
+      return setPwdChk('비밀번호가 일치하지 않습니다.');
+    }
+
+    setPwdChk(false);
   };
 
   // 비밀번호 일치하는지 확인
   const pwdRef = useRef(null);
   const pwdChkRef = useRef(null);
-  const chkPwd = () => {
-    setPwdChk(pwdRef.current.value !== pwdChkRef.current.value ? 'block' : 'none');
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,11 +67,13 @@ const Mymodify = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (pwdRef.current.value !== pwdChkRef.current.value) {
+
+    if (pwdChk) {
       alert('nono');
       return;
     }
     const { data, error } = await supabase.auth.updateUser({
+      password: pwdRef.current.value,
       data: {
         ...userInfo
       }
@@ -69,7 +81,7 @@ const Mymodify = () => {
 
     alert('회원 정보가 수정되었습니다.');
 
-    // return navigate('/mypage', { replace: true, state: { redirectedFrom: pathname } });
+    //return navigate('/mypage', { replace: true, state: { redirectedFrom: pathname } });
   };
 
   return (
@@ -95,21 +107,12 @@ const Mymodify = () => {
         </div>
         <div>
           <label htmlFor="passWord">비밀번호</label>
-          <input
-            id="passWord"
-            ref={pwdRef}
-            onChange={(e) => {
-              infoChange(e);
-              chkPwd();
-            }}
-            type="password"
-            autoComplete="off"
-          />
+          <input id="passWord" ref={pwdRef} onChange={infoChange} type="password" autoComplete="off" />
+          {pwdChk && <PwdChk>{pwdChk}</PwdChk>}
         </div>
         <div>
           <label htmlFor="pwdChk">비밀번호 확인</label>
-          <input id="pwdChk" ref={pwdChkRef} onChange={chkPwd} type="password" autoComplete="off" />
-          <PwdChk display={pwdChk}>비밀번호가 일치하지 않습니다.</PwdChk>
+          <input id="pwdChk" ref={pwdChkRef} onChange={infoChange} type="password" autoComplete="off" />
         </div>
 
         <button type="submit" onClick={handleSubmit}>
