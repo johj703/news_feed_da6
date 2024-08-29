@@ -1,4 +1,4 @@
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabase/supabase';
 import { InfoBox, MemberInfo, MyArticle, MyBoardList, ProfileImg } from './MypageStyle';
 import { useEffect, useState } from 'react';
@@ -60,7 +60,6 @@ const Mypage = () => {
       <MyBoardList>
         <MyArticle></MyArticle>
       </MyBoardList>
-      <Outlet />
     </div>
   );
 };
