@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabase/supabase';
 import { InfoBox, MemberInfo, MyArticle, MyBoardList, ProfileImg } from './MypageStyle';
 import { useEffect, useState } from 'react';
@@ -26,7 +26,7 @@ const Mypage = () => {
 
       const userMetaData = user.user_metadata;
       setUserInfo({
-        name: userMetaData.user_name,
+        user_name: userMetaData.user_name,
         email: userMetaData.email,
         profile_url: userMetaData.profile_url
       });
@@ -52,9 +52,11 @@ const Mypage = () => {
         </ProfileImg>
 
         <MemberInfo>
-          <h4 className="name">{userInfo.name}</h4>
+          <h4 className="name">{userInfo.user_name}</h4>
           <span className="email">{userInfo.email}</span>
         </MemberInfo>
+
+        <Link to="/mypage/mymodify">회원정보 수정</Link>
       </InfoBox>
       {/* 내가 작성한 게시글 */}
       <MyBoardList>
