@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const BoardContainer = styled.dov`
+export const BoardContainer = styled.div`
   padding: 20px;
 `;
 
