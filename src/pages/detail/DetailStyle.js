@@ -23,3 +23,11 @@ export const TitleContainer = styled.div`
 export const Title = styled.h1`
   margin: 0;
 `;
+
+export const UserInfoContainer = styled.div`
+  border-bottom: 1px solid #dadde6;
+  padding: 10px 20px;
+`;
+export const ModifyButton = styled.button`
+  float: right;
+`;
