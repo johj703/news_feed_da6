@@ -1,5 +1,11 @@
+import Form from '../../components/Form/Form';
+
 const Modify = () => {
-  return <div>글 수정</div>;
+  return (
+    <>
+      <Form isModify={true} content={''} />
+    </>
+  );
 };
 
 export default Modify;
