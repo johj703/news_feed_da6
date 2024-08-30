@@ -4,25 +4,33 @@ import { DetailContainer, Title, TitleContainer, ViewContainer } from './DetailS
 import { Viewer } from '@toast-ui/react-editor';
 
 const Detail = () => {
-  const [test, setTest] = useState('');
+  const [test, setTest] = useState({});
 
   const post = async () => {
-    const { data } = await supabase.from('post').select('content').eq('uuid', '1d9bcb10-c706-4a42-99fb-ebfa8591b1f9');
-    setTest(data[0].content);
+    const { data } = await supabase.from('post').select('*').eq('uuid', 'b420ecb0-9135-4761-95c0-f4e4ed57bf8c');
+    console.log(data);
+    setTest(data[0]);
   };
 
   useEffect(() => {
     post();
+    const testUser = async () => {
+      const {
+        data: { user }
+      } = await supabase.auth.getUser();
+      console.log(user);
+    };
+    testUser();
   }, []);
   console.log(test);
   return (
     <DetailContainer>
       <ViewContainer className="view-container">
         <TitleContainer>
-          <Title>title</Title>
-          <span>time</span>
+          <Title>{test.title}</Title>
+          <span>{test.date}</span>
         </TitleContainer>
-        {test && <Viewer className="viewer" initialValue={test} />}
+        {test.content && <Viewer className="viewer" initialValue={test.content} />}
       </ViewContainer>
     </DetailContainer>
   );
