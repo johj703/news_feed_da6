@@ -1,4 +1,5 @@
-import { BoardContainer, Table, TableHeader, TableRow, TableData } from './MainStyle';
+import { Navigate } from 'react-router-dom';
+import { BoardContainer, Table, TableHeader, TableRow, TableData, Button } from './MainStyle';
 
 const Main = () => {
   const posts = [
@@ -46,8 +47,13 @@ const Main = () => {
     }
   ];
 
+  const toWrite = () => {
+    Navigate('/write');
+  };
+
   return (
     <BoardContainer>
+      <Button onClick={toWrite}>글쓰기</Button>
       <Table>
         <thead>
           <tr>
