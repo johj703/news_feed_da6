@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { supabase } from '../../../supabase/supabase';
 import { InputContainer } from './LoginInputStyle';
+import { useNavigate } from 'react-router-dom';
 
 const LoginInput = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -17,6 +19,7 @@ const LoginInput = () => {
       console.log('에러! =>', error);
     } else {
       console.log('로그인 성공! =>', data);
+      navigate('/');
     }
   };
 
