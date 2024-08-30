@@ -1,39 +1,14 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { supabase } from '../../supabase/supabase';
+import { Link } from 'react-router-dom';
 import { InfoBox, MemberInfo, MyArticle, MyBoardList, ProfileImg } from './MypageStyle';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import useFetch from './useFetch';
 
 const Mypage = () => {
   const [userInfo, setUserInfo] = useState({});
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const randomVersionProfile = userInfo.profile_url + '?version=' + crypto.randomUUID();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      // 테스트계정 로그인을 위한 소스
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: 'test@test.com',
-        password: '1q2w3e4r%'
-      });
-
-      const {
-        data: { user }
-      } = await supabase.auth.getUser();
-
-      if (!user) {
-        return navigate('/login', { replace: true, state: { redirectedFrom: pathname } });
-      }
-
-      const userMetaData = user.user_metadata;
-      setUserInfo({
-        user_name: userMetaData.user_name,
-        email: userMetaData.email,
-        profile_url: userMetaData.profile_url
-      });
-    };
-
-    fetchData();
-  }, []);
+  // 유저 정보 가져오기
+  useFetch(setUserInfo);
 
   return (
     <div>
@@ -41,14 +16,7 @@ const Mypage = () => {
       {/* 회원 프로필 영역 */}
       <InfoBox>
         <ProfileImg>
-          <img
-            src={
-              userInfo.profile_url === ''
-                ? 'https://png.pngtree.com/png-clipart/20230917/original/pngtree-succulent-plant-icon-design-vector-png-image_12286228.png'
-                : userInfo.profile_url
-            }
-            alt=""
-          />
+          <img src={randomVersionProfile} alt="" />
         </ProfileImg>
 
         <MemberInfo>

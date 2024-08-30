@@ -1,5 +1,5 @@
 import styled from 'styled-components';
 
-export const PwdChk = styled.span`
+export const PasswordChk = styled.span`
   display: ${(props) => props.display};
 `;
