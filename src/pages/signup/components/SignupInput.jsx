@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { FormContainer } from './SignupInputStyle';
 import { supabase } from '../../../supabase/supabase';
+import { useNavigate } from 'react-router-dom';
 
 // let { data, error } = await supabase.auth.signUp({
 //   email: 'someone@email.com',
@@ -8,6 +9,8 @@ import { supabase } from '../../../supabase/supabase';
 // })
 
 const SignupInput = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordError, setpasswordError] = useState('');
@@ -66,6 +69,7 @@ const SignupInput = () => {
       console.log('에러 =>', error);
     } else {
       console.log('성공!=>', data);
+      navigate('/login');
     }
   };
   return (
