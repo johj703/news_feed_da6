@@ -1,14 +1,26 @@
 import { Link } from 'react-router-dom';
 import { InfoBox, MemberInfo, MyArticle, MyBoardList, ProfileImg } from './MypageStyle';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useFetch from './useFetch';
+import { supabase } from '../../supabase/supabase';
 
 const Mypage = () => {
   const [userInfo, setUserInfo] = useState({});
+  const [myArticle, setMyArticle] = useState([]);
   const randomVersionProfile = userInfo.profile_url + '?version=' + crypto.randomUUID();
 
   // 유저 정보 가져오기
   useFetch(setUserInfo);
+
+  // 게시글 가져오기
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data, error } = await supabase.from('post').select().eq('email', 'cj8928@gmail.com');
+
+      setMyArticle(data);
+    };
+    fetchData();
+  }, []);
 
   return (
     <div>
@@ -28,7 +40,9 @@ const Mypage = () => {
       </InfoBox>
       {/* 내가 작성한 게시글 */}
       <MyBoardList>
-        <MyArticle></MyArticle>
+        {myArticle.map((item) => {
+          return <MyArticle key={item.uuid}>{item.title}</MyArticle>;
+        })}
       </MyBoardList>
     </div>
   );
