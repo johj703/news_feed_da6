@@ -11,9 +11,8 @@ const Form = ({ isModify }) => {
   });
 
   const navigate = useNavigate();
-
   const handleWriteSubmit = async () => {
-    const today = new Date().toLocaleDateString();
+    const today = new Date().toLocaleString();
 
     const { error } = await supabase
       .from('post')
@@ -24,7 +23,6 @@ const Form = ({ isModify }) => {
           date: today,
           title: post.title,
           content: post.contents,
-          img_url: '',
           email: 'cj8928@gmail.com'
         }
       ])
