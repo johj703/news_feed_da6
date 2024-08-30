@@ -13,7 +13,7 @@ export const Table = styled.table`
 export const TableHeader = styled.th`
   padding: 10px;
   border-bottom: 2px solid #ccc;
-  text-align: left;
+  text-align: center;
 `;
 
 export const TableRow = styled.tr`
@@ -25,6 +25,7 @@ export const TableRow = styled.tr`
 export const TableData = styled.td`
   padding: 10px;
   border-bottom: 1px solid #ccc;
+  text-align: center;
 `;
 
 export const Button = styled.button`
