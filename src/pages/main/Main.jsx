@@ -46,17 +46,30 @@ const Main = () => {
     }
   ];
 
-  console.log(posts);
   return (
     <BoardContainer>
-      {posts.map((post) => {
-        return (
-          <Post key={post.id}>
-            <PostTitle>{post.title}</PostTitle>
-            <PostContent>{post.content}</PostContent>
-          </Post>
-        );
-      })}
+      <Table>
+        <thead>
+          <tr>
+            <TableHeader>ID</TableHeader>
+            <TableHeader>Title</TableHeader>
+            <TableHeader>Author</TableHeader>
+            <TableHeader>Date</TableHeader>
+          </tr>
+        </thead>
+        <tbody>
+          {posts.map((post) => {
+            return (
+              <TableRow key={post.id}>
+                <TableData>{post.id}</TableData>
+                <TableData>{post.title}</TableData>
+                <TableData>{post.author}</TableData>
+                <TableData>{post.date}</TableData>
+              </TableRow>
+            );
+          })}
+        </tbody>
+      </Table>
     </BoardContainer>
   );
 };
