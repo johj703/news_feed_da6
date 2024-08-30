@@ -4,18 +4,25 @@ export const BoardContainer = styled.div`
   padding: 20px;
 `;
 
-export const Post = styled.div`
-  border: 1px solid #ccc;
+export const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+`;
+
+export const TableHeader = styled.th`
   padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
+  border-bottom: 2px solid #ccc;
+  text-align: left;
 `;
 
-export const PostTitle = styled.h3`
-  margin: 0;
-  font-size: 18px;
+export const TableRow = styled.tr`
+  &:nth-child(even) {
+    background-color: #f9f9f9;
+  }
 `;
 
-export const PostContent = styled.p`
-  margin: 5px 0 0;
+export const TableData = styled.td`
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
 `;
