@@ -3,18 +3,30 @@ import TuiEditor from '../TuiEditor';
 import { useNavigate } from 'react-router-dom';
 import { ButtonContainer, FormContainer, RegisterButton, TitleInput } from './FormStyle';
 import { supabase } from '../../../supabase/supabase';
-import { usePost } from '../../../hooks/usePost';
+import getPost from '../../detail/hooks/getPost';
 
 const Form = ({ isModify }) => {
   const [post, setPost] = useState({
     title: '',
-    contents: ''
+    content: '',
+    author_name: '',
+    author_profile_url: '',
+    date: '',
+    email: '',
+    uuid: ''
   });
-  const { postData } = usePost();
-  console.log(postData);
 
   const navigate = useNavigate();
 
+  const getPostData = async () => {
+    if (isModify) {
+      const response = await getPost();
+      setPost({ ...response });
+    }
+  };
+  useEffect(() => {
+    getPostData();
+  }, []);
   const handleModifySubmit = async () => {
     const today = new Date().toLocaleString();
     const { error } = await supabase
@@ -25,13 +37,17 @@ const Form = ({ isModify }) => {
           author_profile_url: '',
           date: today,
           title: post.title,
-          content: post.contents,
+          content: post.content,
           email: 'cj8928@gmail.com'
         }
       ])
-      .eq('uuid', postData.uuid)
+      .eq('uuid', post.uuid)
       .select();
-    navigate('/detail/1');
+    if (error) {
+      console.error(error);
+      return;
+    }
+    navigate(`/detail/${post.uuid}`);
   };
 
   const handleWriteSubmit = async () => {
@@ -45,7 +61,7 @@ const Form = ({ isModify }) => {
           author_profile_url: '',
           date: today,
           title: post.title,
-          content: post.contents,
+          content: post.content,
           email: 'cj8928@gmail.com'
         }
       ])
@@ -53,12 +69,15 @@ const Form = ({ isModify }) => {
 
     if (error) {
       console.error(error);
+      return;
     }
     navigate('/');
   };
+
   const handleCancelButton = () => {
     navigate('/detail/1');
   };
+
   return (
     <FormContainer
       onSubmit={(e) => {
@@ -66,14 +85,10 @@ const Form = ({ isModify }) => {
         isModify ? handleModifySubmit() : handleWriteSubmit();
       }}
     >
-      <TitleInput
-        value={post.title}
-        defaultValue={postData.title}
-        placeholder="제목"
-        onChange={(e) => setPost({ ...post, title: e.target.value })}
-      />
+      <TitleInput value={post.title} placeholder="제목" onChange={(e) => setPost({ ...post, title: e.target.value })} />
 
       <TuiEditor setPost={setPost} post={post} />
+
       {isModify ? (
         <ButtonContainer>
           <RegisterButton type="submit">수정</RegisterButton>
