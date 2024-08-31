@@ -1,5 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import { BoardContainer, Table, TableHeader, TableRow, TableData, Button } from './MainStyle';
+import { useEffect } from 'react';
+import { supabase } from './../../supabase/supabase';
 
 const Main = () => {
   const posts = [
@@ -51,6 +53,15 @@ const Main = () => {
     Navigate('/write');
   };
 
+  useEffect(() => {
+    readData();
+  }, []);
+
+  const readData = async () => {
+    const { data: post, error } = await supabase.from('post').select('*');
+    console.log(post);
+  };
+
   return (
     <BoardContainer>
       <Button onClick={toWrite}>글쓰기</Button>
@@ -64,13 +75,13 @@ const Main = () => {
           </tr>
         </thead>
         <tbody>
-          {posts.map((post) => {
+          {posts.map((posts) => {
             return (
-              <TableRow key={post.id}>
-                <TableData>{post.id}</TableData>
-                <TableData>{post.title}</TableData>
-                <TableData>{post.author}</TableData>
-                <TableData>{post.date}</TableData>
+              <TableRow key={posts.id}>
+                <TableData>{posts.id}</TableData>
+                <TableData>{posts.title}</TableData>
+                <TableData>{posts.author}</TableData>
+                <TableData>{posts.date}</TableData>
               </TableRow>
             );
           })}
