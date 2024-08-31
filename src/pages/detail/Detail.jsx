@@ -11,7 +11,7 @@ const Detail = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const post = async () => {
+  const getPostData = async () => {
     const response = await getPost();
     setTest(response);
   };
@@ -36,7 +36,7 @@ const Detail = () => {
   };
 
   useEffect(() => {
-    post();
+    getPostData();
 
     const testUser = async () => {
       const {
