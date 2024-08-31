@@ -1,20 +1,23 @@
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/toastui-editor.css';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { supabase } from '../../supabase/supabase';
-import { usePost } from '../../hooks/usePost';
 
 const toolbar = [['heading', 'bold', 'italic', 'strike'], ['hr', 'quote', 'ul', 'ol'], ['image']];
 const email = 'cj8928@gmail.com';
 const TuiEditor = ({ setPost, post }) => {
   const editorRef = useRef();
-  const { postData } = usePost();
-
+  useEffect(() => {
+    if (editorRef.current) {
+      const editorInstance = editorRef.current.getInstance();
+      editorInstance.setMarkdown(post.content || ''); // post.contents가 없을 때 기본값을 빈 문자열로 설정
+    }
+  }, [post.content]);
   const handleEditorChange = () => {
     const editorInstance = editorRef.current.getInstance();
     const markdownData = editorInstance.getMarkdown();
 
-    setPost({ ...post, contents: markdownData });
+    setPost({ ...post, content: markdownData });
   };
 
   const handleImage = async (file, callback) => {
@@ -27,7 +30,7 @@ const TuiEditor = ({ setPost, post }) => {
 
   return (
     <Editor
-      initialValue={postData.content ?? ' '}
+      initialValue={post.content ?? ''}
       previewStyle="vertical"
       initialEditType="markdown"
       autofocus={false}
