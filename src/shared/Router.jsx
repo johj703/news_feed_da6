@@ -8,6 +8,7 @@ import Write from '../pages/write/Write';
 import Mypage from '../pages/mypage/Mypage';
 import Modify from '../pages/detail/modify/Modify';
 import Mymodify from '../pages/mypage/mymodify/Mymodify';
+import PostContextProvider from '../context/PostContext';
 
 const Router = () => {
   return (
@@ -22,8 +23,22 @@ const Router = () => {
             <Route path="mymodify" element={<Mymodify />} />
           </Route>
 
-          <Route path="/detail/:id" element={<Detail />} />
-          <Route path="/detail/:id/modify" element={<Modify />} />
+          <Route
+            path="/detail/:id"
+            element={
+              <PostContextProvider>
+                <Detail />
+              </PostContextProvider>
+            }
+          />
+          <Route
+            path="/detail/:id/modify"
+            element={
+              <PostContextProvider>
+                <Modify />
+              </PostContextProvider>
+            }
+          />
         </Route>
       </Routes>
     </BrowserRouter>

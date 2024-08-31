@@ -2,15 +2,18 @@ import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/toastui-editor.css';
 import { useRef } from 'react';
 import { supabase } from '../../supabase/supabase';
+import { usePost } from '../../hooks/usePost';
 
 const toolbar = [['heading', 'bold', 'italic', 'strike'], ['hr', 'quote', 'ul', 'ol'], ['image']];
 const email = 'cj8928@gmail.com';
-const TuiEditor = ({ content, setPost, post }) => {
+const TuiEditor = ({ setPost, post }) => {
   const editorRef = useRef();
+  const { postData } = usePost();
 
   const handleEditorChange = () => {
     const editorInstance = editorRef.current.getInstance();
     const markdownData = editorInstance.getMarkdown();
+
     setPost({ ...post, contents: markdownData });
   };
 
@@ -21,9 +24,10 @@ const TuiEditor = ({ content, setPost, post }) => {
       return;
     }
   };
+
   return (
     <Editor
-      initialValue={content ?? ' '}
+      initialValue={postData.content ?? ' '}
       previewStyle="vertical"
       initialEditType="markdown"
       autofocus={false}
