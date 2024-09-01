@@ -42,25 +42,3 @@ export const Button = styled.button`
     background-color: #0056b3;
   }
 `;
-
-export const PaginationContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-`;
-
-export const PageButton = styled.button`
-  padding: 8px 12px;
-  margin: 0 5px;
-  font-size: 16px;
-  color: ${(props) => (props.isActive ? 'white' : '#007bff')};
-  background-color: ${(props) => (props.isActive ? '#007bff' : 'white')};
-  border: 1px solid #007bff;
-  border-radius: 5px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #0056b3;
-    color: white;
-  }
-`;
