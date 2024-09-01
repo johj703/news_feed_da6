@@ -1,22 +1,36 @@
 import { useState } from 'react';
 import { FormContainer } from './SignupInputStyle';
 import { supabase } from '../../../supabase/supabase';
-
-// let { data, error } = await supabase.auth.signUp({
-//   email: 'someone@email.com',
-//   password: 'dRQuNeXFDhRdqAUaZyOQ'
-// })
+import { useNavigate } from 'react-router-dom';
 
 const SignupInput = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [password, setPassword] = useState('');
   const [passwordError, setpasswordError] = useState('');
   const [verifyPssword, setverifyPssword] = useState('');
   const [verifyPsswordError, setverifyPsswordError] = useState('');
   const [name, setName] = useState('');
 
+  const validateEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
   const strongPassword = (password) => {
     return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(password);
+  };
+
+  const handleEmailCeck = (e) => {
+    const newEmail = e.target.value;
+    setEmail(newEmail);
+
+    if (!validateEmail(newEmail)) {
+      setEmailError('이메일 형식으로 작성해주세요!');
+    } else {
+      setEmailError('');
+    }
   };
 
   const passwordCheck = (e) => {
@@ -46,9 +60,9 @@ const SignupInput = () => {
   const handleAdd = async (e) => {
     e.preventDefault();
 
-    if (passwordError || verifyPsswordError) {
-      // 둘 다 falsy한 값이 들어왔을 때 넘어갈 수 있다.
-      alert('비밀번호를 확인해주세요!');
+    if (emailError || passwordError || verifyPsswordError) {
+      // 셋 다 falsy한 값이 들어왔을 때 넘어갈 수 있다.
+      alert('입력한 정보를 다시 확인해주세요!');
       return;
     }
 
@@ -66,6 +80,7 @@ const SignupInput = () => {
       console.log('에러 =>', error);
     } else {
       console.log('성공!=>', data);
+      navigate('/login');
     }
   };
   return (
@@ -84,13 +99,8 @@ const SignupInput = () => {
         </div>
         <div>
           <p>아이디</p>
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          />
+          <input type="text" value={email} onChange={handleEmailCeck} />
+          <p>{emailError}</p>
         </div>
         <div>
           <p>비밀번호</p>
@@ -109,5 +119,3 @@ const SignupInput = () => {
 };
 
 export default SignupInput;
-// on aurthstate change 유저가 무언가 변경하는 상황이 생겼을 때 사용
-// user에 권한 바꼇을 때 사용 , 로그인 됨, 로그아웃, 비밀번호 복구, 사용자 정보 업데이트, 세션 토큰?은 나중에 수업
