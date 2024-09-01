@@ -9,7 +9,7 @@ import {
   PaginationContainer,
   PageButton
 } from './MainStyle';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { supabase } from './../../supabase/supabase';
 
 const Main = () => {
@@ -155,6 +155,9 @@ const Main = () => {
       date: '24-09-01'
     }
   ];
+
+  // 페이지네이션 상태 관리
+  const [currentPage, setCurrentPage] = useState(1);
 
   const toWrite = () => {
     Navigate('/write');
