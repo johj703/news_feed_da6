@@ -41,6 +41,17 @@ const Comment = () => {
         .from('comments')
         .insert([{ post_id: postId, content: newComment }])
         .select(); // 삽입된 데이터 가지고 오기
+
+      // 에러 처리
+      if (error) {
+        console.log('댓글을 추가하는 중 오류가 발생 했습니다.', error);
+      } else {
+        // 새로운 댓글을 기존 댓글 리스트에 추가
+        setComments([...comments, ...data]);
+
+        // 입력 필드를 비우기
+        setNewComments('');
+      }
     }
   };
 
