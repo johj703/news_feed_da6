@@ -1,7 +1,15 @@
 import { useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../../../supabase/supabase';
-import { PasswordChk } from './MymodifyStyle';
+import {
+  ImageButtonArea,
+  Input,
+  InputWrapper,
+  ModifyForm,
+  PasswordChk,
+  ProfileImage,
+  ProfileImageWrap
+} from './MymodifyStyle';
 import useFetch from '../useFetch';
 
 const Mymodify = () => {
@@ -115,46 +123,51 @@ const Mymodify = () => {
 
   return (
     <>
-      <form onSubmit={dependSubmit}>
-        <div>
-          <img src={userInfo.profile_url + '?version=' + crypto.randomUUID()} alt="" />
-          <input type="file" id="file" name="file" onChange={(e) => changeImage(e)} />
-          <button onClick={handleResetProfile}>이미지 삭제</button>
-        </div>
+      <ModifyForm onSubmit={dependSubmit}>
+        <ProfileImageWrap>
+          <ProfileImage>
+            <img src={userInfo.profile_url + '?version=' + crypto.randomUUID()} alt="" />
+          </ProfileImage>
 
-        <div>
+          <ImageButtonArea>
+            <input type="file" id="file" onChange={(e) => changeImage(e)} />
+            <button onClick={handleResetProfile}>이미지 삭제</button>
+          </ImageButtonArea>
+        </ProfileImageWrap>
+
+        <InputWrapper>
           <label htmlFor="user_name">이름</label>
-          <input id="user_name" type="text" onChange={infoChange} value={userInfo.user_name || ''} />
-        </div>
+          <Input id="user_name" type="text" onChange={infoChange} value={userInfo.user_name || ''} />
+        </InputWrapper>
 
-        <div>
+        <InputWrapper>
           <label htmlFor="email">이메일</label>
-          <input
+          <Input
             id="email"
             type="email"
             required
             pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
-            onChange={infoChange}
+            //onChange={infoChange}
             value={userInfo.email || ''}
+            readOnly
           />
-          <span>변경하실 이메일에서, 확인 메일을 확인해주세요.</span>
-        </div>
+        </InputWrapper>
 
-        <div>
+        <InputWrapper>
           <label htmlFor="passWord">비밀번호</label>
-          <input id="passWord" ref={passwordRef} onChange={infoChange} type="password" autoComplete="off" />
+          <Input id="passWord" ref={passwordRef} onChange={infoChange} type="password" autoComplete="off" />
           {passwordChk && <PasswordChk>{passwordChk}</PasswordChk>}
-        </div>
+        </InputWrapper>
 
-        <div>
+        <InputWrapper>
           <label htmlFor="passwordChk">비밀번호 확인</label>
-          <input id="passwordChk" ref={passwordChkRef} onChange={infoChange} type="password" autoComplete="off" />
-        </div>
+          <Input id="passwordChk" ref={passwordChkRef} onChange={infoChange} type="password" autoComplete="off" />
+        </InputWrapper>
 
         <button type="submit" onClick={handleSubmit}>
           회원정보수정
         </button>
-      </form>
+      </ModifyForm>
     </>
   );
 };
