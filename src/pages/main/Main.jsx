@@ -162,6 +162,17 @@ const Main = () => {
   // 페이지 하나당 포스트의 개수는 10개인 상수 생성
   const postsPerPage = 10;
 
+  // 총 페이지 수 계산
+  const totalPages = Math.ceil(posts.length / postsPerPage);
+
+  // 현재 페이지에 해당하는 게시물 계산
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+  // 페이지 변경 하는 함수
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   const toWrite = () => {
     Navigate('/write');
   };
@@ -188,13 +199,13 @@ const Main = () => {
           </tr>
         </thead>
         <tbody>
-          {posts.map((posts) => {
+          {currentPosts.map((post) => {
             return (
-              <TableRow key={posts.id}>
-                <TableData>{posts.id}</TableData>
-                <TableData>{posts.title}</TableData>
-                <TableData>{posts.author}</TableData>
-                <TableData>{posts.date}</TableData>
+              <TableRow key={post.id}>
+                <TableData>{post.id}</TableData>
+                <TableData>{post.title}</TableData>
+                <TableData>{post.author}</TableData>
+                <TableData>{post.date}</TableData>
               </TableRow>
             );
           })}
