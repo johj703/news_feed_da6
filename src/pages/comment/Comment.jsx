@@ -33,6 +33,17 @@ const Comment = () => {
     fetchcomments();
   }, [postId]);
 
+  // 새로운 댓글을 추가하는 함수
+  const addComment = async () => {
+    if (newComment.trim()) {
+      // Supabase에 새로운 댓글을 추가
+      const { data, error } = await supabase
+        .from('comments')
+        .insert([{ post_id: postId, content: newComment }])
+        .select(); // 삽입된 데이터 가지고 오기
+    }
+  };
+
   return (
     <div>
       <h3>{postId}번 포스트의 댓글</h3> {/* postId 표시 */}
@@ -49,7 +60,7 @@ const Comment = () => {
         onChange={(e) => setNewComments(e.target.value)}
         placeholder="댓글을 입력하세요"
       />
-      <button>댓글 추가</button>
+      <button onClick={addComment}>댓글 추가</button>
     </div>
   );
 };
