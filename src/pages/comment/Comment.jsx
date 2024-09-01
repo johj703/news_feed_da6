@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { supabase } from '../../supabase';
+import { supabase } from './../../supabase/supabase';
 
 const Comment = () => {
   // URL에서 postId 가지고 오기
