@@ -159,6 +159,9 @@ const Main = () => {
   // 페이지네이션 상태 관리
   const [currentPage, setCurrentPage] = useState(1);
 
+  // 페이지 하나당 포스트의 개수는 10개인 상수 생성
+  const postPerPage = 10;
+
   const toWrite = () => {
     Navigate('/write');
   };
