@@ -29,7 +29,7 @@ const SignupInput = () => {
     if (!validateEmail(newEmail)) {
       setEmailError('이메일 형식으로 작성해주세요!');
     } else {
-      setEmail('');
+      setEmailError('');
     }
   };
 
