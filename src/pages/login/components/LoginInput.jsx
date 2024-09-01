@@ -16,7 +16,7 @@ const LoginInput = () => {
       password
     });
     if (error) {
-      console.log('에러! =>', error);
+      alert('아이디, 비밀번호를 확인해주세요!');
     } else {
       console.log('로그인 성공! =>', data);
       navigate('/');
@@ -50,6 +50,14 @@ const LoginInput = () => {
         </div>
         <button type="submit">로그인</button>
       </form>
+      <p>계정이 없으신가요?</p>
+      <button
+        onClick={() => {
+          navigate('/signup');
+        }}
+      >
+        회원가입
+      </button>
     </InputContainer>
   );
 };
