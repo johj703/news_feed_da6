@@ -8,6 +8,7 @@ import Write from '../pages/Write/Write';
 import Mypage from '../pages/mypage/Mypage';
 import Modify from '../pages/detail/modify/Modify';
 import Mymodify from '../pages/mypage/mymodify/Mymodify';
+import Comment from '../pages/comment/Comment';
 
 const Router = () => {
   return (
@@ -18,6 +19,7 @@ const Router = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/write" element={<Write />} />
+          <Comment path="/comments/:postId" element={<Comment />} />
           <Route path="/mypage" element={<Mypage />}>
             <Route path="mymodify" element={<Mymodify />} />
           </Route>
