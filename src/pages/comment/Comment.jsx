@@ -31,7 +31,7 @@ const Comment = () => {
 
     // 댓글 데이터 가져오기 함수 호출
     fetchcomments();
-  });
+  }, [postId]);
 
   return (
     <div>
