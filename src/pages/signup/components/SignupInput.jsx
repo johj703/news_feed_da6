@@ -3,11 +3,6 @@ import { FormContainer } from './SignupInputStyle';
 import { supabase } from '../../../supabase/supabase';
 import { useNavigate } from 'react-router-dom';
 
-// let { data, error } = await supabase.auth.signUp({
-//   email: 'someone@email.com',
-//   password: 'dRQuNeXFDhRdqAUaZyOQ'
-// })
-
 const SignupInput = () => {
   const navigate = useNavigate();
 
@@ -124,5 +119,3 @@ const SignupInput = () => {
 };
 
 export default SignupInput;
-// on aurthstate change 유저가 무언가 변경하는 상황이 생겼을 때 사용
-// user에 권한 바꼇을 때 사용 , 로그인 됨, 로그아웃, 비밀번호 복구, 사용자 정보 업데이트, 세션 토큰?은 나중에 수업
