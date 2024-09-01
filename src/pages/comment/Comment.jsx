@@ -19,7 +19,18 @@ const Comment = () => {
         .select('*')
         .eq('post_id', postId)
         .order('created_at', { ascending: true }); // 시간순으로 정렬
+
+      // 에러 처리
+      if (error) {
+        console.log('댓글을 불러오는 중에 오류가 발생했습니다.', error);
+      } else {
+        // 가지고온 데이터를 상태 변수에 저장
+        setComments(data);
+      }
     };
+
+    // 댓글 데이터 가져오기 함수 호출
+    fetchcomments();
   });
 
   return (
