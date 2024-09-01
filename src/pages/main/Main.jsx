@@ -1,14 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import {
-  BoardContainer,
-  Table,
-  TableHeader,
-  TableRow,
-  TableData,
-  Button,
-  PaginationContainer,
-  PageButton
-} from './MainStyle';
+import { BoardContainer, Table, TableHeader, TableRow, TableData, Button } from './MainStyle';
 import { useEffect } from 'react';
 import { supabase } from './../../supabase/supabase';
 
@@ -96,17 +87,6 @@ const Main = () => {
           })}
         </tbody>
       </Table>
-
-      {/* 게시물이 10개 이상일 때 페이지네이션을 렌더링 */}
-      {posts.length > 10 && (
-        <PaginationContainer>
-          {[...Array(totalPages)].map((_, index) => (
-            <PageButton key={index + 1} onClick={() => paginate(index + 1)} isActive={currentPage === index + 1}>
-              {index + 1}
-            </PageButton>
-          ))}
-        </PaginationContainer>
-      )}
     </BoardContainer>
   );
 };
