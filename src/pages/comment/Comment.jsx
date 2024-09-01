@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { supabase } from '../../supabase';
 
 const Comment = () => {
   // URL에서 postId 가지고 오기
@@ -9,7 +10,37 @@ const Comment = () => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComments] = useState('');
 
-  return <div>Comment</div>;
+  // 컴포넌트가 처음 렌더링될 때 댓글 데이터를 가지고 오는 함수
+  useEffect(() => {
+    const fetchcomments = async () => {
+      // Supabase에서 특정 postId에 해당하는 댓글 데이터를 가지고 옴
+      const { data, error } = await supabase
+        .from('comments')
+        .select('*')
+        .eq('post_id', postId)
+        .order('created_at', { ascending: true }); // 시간순으로 정렬
+    };
+  });
+
+  return (
+    <div>
+      <h3>{postId}번 포스트의 댓글</h3> {/* postId 표시 */}
+      <ul>
+        {comments.map((comment) => (
+          <li key={comment.id}>
+            {comment.content} {/* 댓글 내용 */}
+          </li>
+        ))}
+      </ul>
+      <input
+        type="text"
+        value={newComment}
+        onChange={(e) => setNewComments(e.target.value)}
+        placeholder="댓글을 입력하세요"
+      />
+      <button>댓글 추가</button>
+    </div>
+  );
 };
 
 export default Comment;
