@@ -7,6 +7,7 @@ export const FooterInner = styled.footer`
   justify-content: space-between;
   gap: 32px;
   padding: 24px;
+  margin-top: 120px;
   background: #608a46;
   > img {
     height: 48px;

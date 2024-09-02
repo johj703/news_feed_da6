@@ -1,8 +1,11 @@
 import { Link, useSearchParams } from 'react-router-dom';
-import { InfoBox, MemberInfo, MyArticle, MyBoardList, ProfileImg } from './MypageStyle';
+import { BoardArea, InfoBox, MemberInfo, MyArticle, MyBoardList, MyPageWrap, Paging, ProfileImg } from './MypageStyle';
 import { useEffect, useState } from 'react';
 import useFetch from './useFetch';
 import { supabase } from '../../supabase/supabase';
+
+import prev from '../../assets/prev.png';
+import next from '../../assets/next.png';
 
 const maxPagingLength = 5; // 한 번에 보여 줄 페이징 개수
 const maxBoardLength = 5; // 한 번에 보여 줄 게시글 개수
@@ -21,7 +24,7 @@ const Mypage = () => {
   const [userInfo, setUserInfo] = useState({}); // 사용자 정보
   const [myArticle, setMyArticle] = useState(initialBoard); // 내가 쓴 게시글
 
-  const randomVersionProfile = userInfo.profile_url + '?version=' + crypto.randomUUID(); // 프로필 이미지 캐시이슈로 버전 랜덤으로 추가
+  const randomVersionProfile = userInfo.profile_url; // 프로필 이미지 캐시이슈로 버전 랜덤으로 추가
 
   // 유저 정보 가져오기
   useFetch(setUserInfo);
@@ -61,7 +64,7 @@ const Mypage = () => {
 
     for (let i = startPage; i <= lastPage; i++) {
       page.push(
-        <Link key={'page' + i} to={`/mypage?page=${i}`}>
+        <Link key={'page' + i} to={`/mypage?page=${i}`} className={nowBoardPage === i && 'nowPage'}>
           {i}
         </Link>
       );
@@ -90,8 +93,7 @@ const Mypage = () => {
   };
 
   return (
-    <div>
-      Mypage
+    <MyPageWrap>
       {/* 회원 프로필 영역 */}
       <InfoBox>
         <ProfileImg>
@@ -100,32 +102,39 @@ const Mypage = () => {
 
         <MemberInfo>
           <h4 className="name">{userInfo.display_name}</h4>
-          <span className="email">{userInfo.email}</span>
+          <span className="email">email : {userInfo.email}</span>
         </MemberInfo>
 
         <Link to="/mypage/mymodify">회원정보 수정</Link>
       </InfoBox>
       {/* 내가 작성한 게시글 */}
       {myArticle.data && (
-        <>
+        <BoardArea>
           <MyBoardList>
             {myArticle.data.map((item) => {
               const detailLink = `/detail/${item.uuid}`;
               return (
-                <Link to={detailLink} key={item.uuid}>
-                  <MyArticle>{item.title}</MyArticle>
-                </Link>
+                <MyArticle key={item.uuid}>
+                  <Link to={detailLink}>
+                    {item.title} <span>{item.date.split('오')[0]}</span>
+                  </Link>
+                </MyArticle>
               );
             })}
           </MyBoardList>
-          <div className="paging">
-            <div onClick={handleClickPrev}>이전</div>
+
+          <Paging>
+            <div className="prev" onClick={handleClickPrev}>
+              <img src={prev} alt="이전 버튼" />
+            </div>
             {makePaging(pageOfPaging)}
-            <div onClick={handleClickNext}>다음</div>
-          </div>
-        </>
+            <div className="next" onClick={handleClickNext}>
+              <img src={next} alt="다음 버튼" />
+            </div>
+          </Paging>
+        </BoardArea>
       )}
-    </div>
+    </MyPageWrap>
   );
 };
 

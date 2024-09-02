@@ -3,13 +3,17 @@ import { useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../../../supabase/supabase';
 import {
+  Box,
   ImageButtonArea,
+  InnerBox,
   Input,
   InputWrapper,
   ModifyForm,
   PasswordChk,
   ProfileImage,
-  ProfileImageWrap
+  ProfileImageWrap,
+  SubmitButton,
+  Title
 } from './MymodifyStyle';
 import useFetch from '../useFetch';
 
@@ -74,7 +78,7 @@ const Mymodify = () => {
 
         setUserInfo({
           ...userInfo,
-          profile_url: data.publicUrl
+          profile_url: data.publicUrl + '?version=' + crypto.randomUUID()
         });
       });
   };
@@ -117,7 +121,7 @@ const Mymodify = () => {
       email: userInfo.email,
       data: {
         display_name: userInfo.display_name,
-        profile_url: userInfo.profile_url
+        profile_url: userInfo.profile_url + '?version=' + crypto.randomUUID()
       }
     });
 
@@ -145,50 +149,56 @@ const Mymodify = () => {
 
   return (
     <>
+      <Title>회원 정보 수정</Title>
       <ModifyForm onSubmit={dependSubmit}>
         <ProfileImageWrap>
           <ProfileImage>
-            <img src={userInfo.profile_url + '?version=' + crypto.randomUUID()} alt="" />
+            <img src={userInfo.profile_url} alt="" />
           </ProfileImage>
 
           <ImageButtonArea>
+            <label htmlFor="file">이미지 업로드</label>
             <input type="file" id="file" onChange={(e) => changeImage(e)} />
             <button onClick={handleResetProfile}>이미지 삭제</button>
           </ImageButtonArea>
         </ProfileImageWrap>
 
-        <InputWrapper>
-          <label htmlFor="user_name">이름</label>
-          <Input id="user_name" type="text" onChange={infoChange} value={userInfo.display_name || ''} />
-        </InputWrapper>
+        <Box>
+          <InnerBox>
+            <InputWrapper>
+              <label htmlFor="user_name">닉네임</label>
+              <Input id="user_name" type="text" onChange={infoChange} value={userInfo.display_name || ''} />
+            </InputWrapper>
 
-        <InputWrapper>
-          <label htmlFor="email">이메일</label>
-          <Input
-            id="email"
-            type="email"
-            required
-            pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
-            //onChange={infoChange}
-            value={userInfo.email || ''}
-            readOnly
-          />
-        </InputWrapper>
+            <InputWrapper>
+              <label htmlFor="email">이메일</label>
+              <Input
+                id="email"
+                type="email"
+                required
+                pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+                //onChange={infoChange}
+                value={userInfo.email || ''}
+                readOnly
+              />
+            </InputWrapper>
 
-        <InputWrapper>
-          <label htmlFor="passWord">비밀번호</label>
-          <Input id="passWord" ref={passwordRef} onChange={infoChange} type="password" autoComplete="off" />
-          {passwordChk && <PasswordChk>{passwordChk}</PasswordChk>}
-        </InputWrapper>
+            <InputWrapper>
+              <label htmlFor="passWord">비밀번호</label>
+              <Input id="passWord" ref={passwordRef} onChange={infoChange} type="password" autoComplete="off" />
+              {passwordChk && <PasswordChk>{passwordChk}</PasswordChk>}
+            </InputWrapper>
 
-        <InputWrapper>
-          <label htmlFor="passwordChk">비밀번호 확인</label>
-          <Input id="passwordChk" ref={passwordChkRef} onChange={infoChange} type="password" autoComplete="off" />
-        </InputWrapper>
+            <InputWrapper>
+              <label htmlFor="passwordChk">비밀번호 확인</label>
+              <Input id="passwordChk" ref={passwordChkRef} onChange={infoChange} type="password" autoComplete="off" />
+            </InputWrapper>
+          </InnerBox>
 
-        <button type="submit" onClick={handleSubmit}>
-          회원정보수정
-        </button>
+          <SubmitButton type="submit" onClick={handleSubmit}>
+            정보수정
+          </SubmitButton>
+        </Box>
       </ModifyForm>
     </>
   );

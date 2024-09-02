@@ -29,7 +29,11 @@ body {
   margin: 0;
 }
 main {
+  max-width: 1280px;
   min-height: 80vh;
+  padding: 0 4%;
+  margin: 0 auto;
+  box-sizing: content-box;
 }
 
 /* 기본 여백을 제거하여 작성된 CSS를 더 잘 제어할 수 있습니다. */
