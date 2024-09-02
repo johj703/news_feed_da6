@@ -59,6 +59,7 @@ export const ImageButtonArea = styled.div`
     color: #fff;
     overflow: hidden;
     border-radius: 8px;
+    cursor: pointer;
   }
 
   input {

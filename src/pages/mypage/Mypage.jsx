@@ -1,7 +1,6 @@
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { BoardArea, InfoBox, MemberInfo, MyArticle, MyBoardList, MyPageWrap, Paging, ProfileImg } from './MypageStyle';
 import { useEffect, useState } from 'react';
-import useFetch from './useFetch';
 import { supabase } from '../../supabase/supabase';
 
 import prev from '../../assets/prev.png';
@@ -16,21 +15,24 @@ const initialBoard = {
 };
 
 const Mypage = () => {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const nowBoardPage = searchParams.get('page') ? Number(searchParams.get('page')) : 1; // 현재 게시글 페이징 번호
 
   const [pageOfPaging, setPageOfPaging] = useState(parseInt(nowBoardPage / maxPagingLength + 1)); // 페이징의 페이지..?
 
-  const [userInfo, setUserInfo] = useState({}); // 사용자 정보
   const [myArticle, setMyArticle] = useState(initialBoard); // 내가 쓴 게시글
 
-  const randomVersionProfile = userInfo.profile_url; // 프로필 이미지 캐시이슈로 버전 랜덤으로 추가
-
-  // 유저 정보 가져오기
-  useFetch(setUserInfo);
+  const getUserData = JSON.parse(localStorage.getItem('userData'));
+  const userInfo = getUserData?.user_metadata;
+  const randomVersionProfile = userInfo?.profile_url; // 프로필 이미지 캐시이슈로 버전 랜덤으로 추가
 
   // 게시글 가져오기
   useEffect(() => {
+    if (!getUserData) {
+      return navigate('/login', { replace: true });
+    }
+
     const fetchData = async () => {
       // 출력할 게시글 설정
       await supabase
@@ -51,7 +53,7 @@ const Mypage = () => {
         });
     };
     fetchData();
-  }, [userInfo, searchParams]);
+  }, [searchParams]);
 
   // 페이징 생성하기
   const makePaging = (num) => {
@@ -101,8 +103,8 @@ const Mypage = () => {
         </ProfileImg>
 
         <MemberInfo>
-          <h4 className="name">{userInfo.display_name}</h4>
-          <span className="email">email : {userInfo.email}</span>
+          <h4 className="name">{userInfo?.display_name}</h4>
+          <span className="email">email : {userInfo?.email}</span>
         </MemberInfo>
 
         <Link to="/mypage/mymodify">회원정보 수정</Link>

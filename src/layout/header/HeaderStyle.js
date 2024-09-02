@@ -6,7 +6,7 @@ export const HeaderInner = styled.header`
   justify-content: space-between;
   background: #608a46;
   padding: 20px 40px;
-  > img {
+  img {
     height: 48px;
   }
 `;

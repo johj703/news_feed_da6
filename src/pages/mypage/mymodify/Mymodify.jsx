@@ -1,5 +1,5 @@
 import Swal from 'sweetalert2';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../../../supabase/supabase';
 import {
@@ -15,18 +15,21 @@ import {
   SubmitButton,
   Title
 } from './MymodifyStyle';
-import useFetch from '../useFetch';
 
 const Mymodify = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const getUserData = JSON.parse(localStorage.getItem('userData'));
 
-  const [userInfo, setUserInfo] = useState({}); // Input value에 따라 사용자 정보 저장
+  const [userInfo, setUserInfo] = useState(getUserData ? getUserData.user_metadata : {}); // Input value에 따라 사용자 정보 저장
   const [passwordChk, setPasswordChk] = useState(false); // 비밀번호 안내문구 none/block
   const [profileImage, setProfileImage] = useState(null);
 
-  // 유저 정보 가져오기
-  useFetch(setUserInfo);
+  useEffect(() => {
+    if (!getUserData) {
+      navigate('/login', { replace: true });
+    }
+  }, []);
 
   // 비밀번호 유효성검사 규칙 (8글자 이상, 영문, 숫자, 특수문자 사용)
   const passwordRules = (password) => {
@@ -196,7 +199,7 @@ const Mymodify = () => {
           </InnerBox>
 
           <SubmitButton type="submit" onClick={handleSubmit}>
-            정보수정
+            회원정보수정
           </SubmitButton>
         </Box>
       </ModifyForm>
