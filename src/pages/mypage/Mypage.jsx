@@ -5,7 +5,7 @@ import useFetch from './useFetch';
 import { supabase } from '../../supabase/supabase';
 
 const maxPagingLength = 5; // 한 번에 보여 줄 페이징 개수
-const maxBoardLength = 10; // 한 번에 보여 줄 게시글 개수
+const maxBoardLength = 5; // 한 번에 보여 줄 게시글 개수
 
 const initialBoard = {
   data: null,
@@ -38,7 +38,7 @@ const Mypage = () => {
           const length = res.data.length; // 게시글 개수
           const nowListLast = length - maxBoardLength * (nowBoardPage - 1); // 보여질 게시글 마지막 번호
           const nowListStart = nowListLast - maxBoardLength; // 보여질 게시글 시작 번호
-          const data = res.data.slice(nowListStart < 0 ? 0 : nowListStart, nowListLast).reverse();
+          const data = res.data.slice(nowListStart < 0 ? 0 : nowListStart, nowListLast).reverse(); // 최신글이 위로 올라오게 reverse
 
           return { data, length: Math.ceil(length / maxBoardLength) };
         });
