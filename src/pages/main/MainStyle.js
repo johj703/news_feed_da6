@@ -39,6 +39,18 @@ export const ContentContainer = styled.div`
   flex-direction: column;
 `;
 
+export const TitleRow = styled.div`
+  font-weight: bold;
+  margin-bottom: 5px; /* 제목과 아래 텍스트들 간의 간격 */
+`;
+
+export const SubRow = styled.div`
+  color: #555;
+  font-size: 0.9em;
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const ButtonContainer = styled.div`
   display: flex;
   margin-top: 20px;
