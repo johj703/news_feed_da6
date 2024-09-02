@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   BoardContainer,
   Table,
@@ -176,8 +176,14 @@ const Main = () => {
   // 페이지 변경 하는 함수
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  const navigate = useNavigate();
+
   const toWrite = () => {
-    Navigate('/write');
+    navigate('/write');
+  };
+
+  const toDetail = (id) => {
+    navigate(`/detail/${id}`);
   };
 
   useEffect(() => {
@@ -195,7 +201,6 @@ const Main = () => {
       <Table>
         <thead>
           <tr>
-            <TableHeader>ID</TableHeader>
             <TableHeader>Title</TableHeader>
             <TableHeader>Author</TableHeader>
             <TableHeader>Date</TableHeader>
@@ -204,10 +209,9 @@ const Main = () => {
         <tbody>
           {posts.map((post) => {
             return (
-              <TableRow key={post.id}>
-                <TableData>{post.id}</TableData>
+              <TableRow key={post.uuid} onClick={() => toDetail(post.uuid)}>
                 <TableData>{post.title}</TableData>
-                <TableData>{post.author}</TableData>
+                <TableData>{post.author_name}</TableData>
                 <TableData>{post.date}</TableData>
               </TableRow>
             );
