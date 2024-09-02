@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FormContainer, InputContainer, SigninButton } from './SignupInputStyle';
+import { BackButton, ErrorBox, FormContainer, HeaderContainer, InputContainer, SigninButton } from './SignupInputStyle';
 import { supabase } from '../../../supabase/supabase';
 import { useNavigate } from 'react-router-dom';
 
@@ -91,10 +91,19 @@ const SignupInput = () => {
   };
   return (
     <FormContainer>
-      <h1>회원 가입</h1>
+      <HeaderContainer>
+        <h1>회원 가입</h1>
+        <BackButton
+          onClick={() => {
+            navigate('/login');
+          }}
+        >
+          {'<'}
+        </BackButton>
+      </HeaderContainer>
       <InputContainer onSubmit={handleSignup}>
         <div>
-          <span>이름</span>
+          <span>닉네임</span>
           <input
             type="text"
             value={formState.name}
@@ -102,22 +111,27 @@ const SignupInput = () => {
           />
         </div>
         <div>
-          <span>아이디</span>
+          <span>이메일</span>
           <input type="text" value={formState.email} onChange={handleEmailCheck} />
-          <p>{formState.emailError}</p>
         </div>
+        <ErrorBox>
+          <p>{formState.emailError}</p>
+        </ErrorBox>
         <div>
           <span>비밀번호</span>
           <input type="password" value={formState.password} autoComplete="off" onChange={passwordCheck} />
-          <p>{formState.passwordError}</p>
         </div>
+        <ErrorBox>
+          <p>{formState.passwordError}</p>
+        </ErrorBox>
         <div>
           <span>비밀번호 확인</span>
           <input type="password" value={formState.verifyPssword} autoComplete="off" onChange={VerifyPasswordCheck} />
           <p>{formState.verifyPsswordError}</p>
         </div>
-        <SigninButton type="submit">가입하기</SigninButton>
+        <SigninButton type="submit">회원가입</SigninButton>
       </InputContainer>
+      <img src="../../../../public/1.png" alt="" />
     </FormContainer>
   );
 };
