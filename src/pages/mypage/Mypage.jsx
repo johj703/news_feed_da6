@@ -30,10 +30,10 @@ const Mypage = () => {
   useEffect(() => {
     const fetchData = async () => {
       // 출력할 게시글 설정
-      const boardList = await supabase
+      await supabase
         .from('post')
         .select()
-        .eq('email', 'cj8928@gmail.com')
+        .eq('email', userInfo.email)
         .then((res) => {
           const length = res.data.length; // 게시글 개수
           const nowListLast = length - maxBoardLength * (nowBoardPage - 1); // 보여질 게시글 마지막 번호
@@ -41,13 +41,14 @@ const Mypage = () => {
           const data = res.data.slice(nowListStart < 0 ? 0 : nowListStart, nowListLast).reverse(); // 최신글이 위로 올라오게 reverse
 
           return { data, length: Math.ceil(length / maxBoardLength) };
+        })
+        .then((data) => {
+          // 게시글 state에 저장
+          data.length !== 0 && setMyArticle(data);
         });
-
-      // 게시글 state에 저장
-      setMyArticle(boardList);
     };
     fetchData();
-  }, [searchParams]);
+  }, [userInfo, searchParams]);
 
   // 페이징 생성하기
   const makePaging = (num) => {
@@ -98,29 +99,32 @@ const Mypage = () => {
         </ProfileImg>
 
         <MemberInfo>
-          <h4 className="name">{userInfo.user_name}</h4>
+          <h4 className="name">{userInfo.display_name}</h4>
           <span className="email">{userInfo.email}</span>
         </MemberInfo>
 
         <Link to="/mypage/mymodify">회원정보 수정</Link>
       </InfoBox>
       {/* 내가 작성한 게시글 */}
-      <MyBoardList>
-        {myArticle.data &&
-          myArticle.data.map((item) => {
-            const detailLink = `/detail/${item.uuid}`;
-            return (
-              <Link to={detailLink} key={item.uuid}>
-                <MyArticle>{item.title}</MyArticle>
-              </Link>
-            );
-          })}
-      </MyBoardList>
-      <div className="paging">
-        <div onClick={handleClickPrev}>이전</div>
-        {makePaging(pageOfPaging)}
-        <div onClick={handleClickNext}>다음</div>
-      </div>
+      {myArticle.data && (
+        <>
+          <MyBoardList>
+            {myArticle.data.map((item) => {
+              const detailLink = `/detail/${item.uuid}`;
+              return (
+                <Link to={detailLink} key={item.uuid}>
+                  <MyArticle>{item.title}</MyArticle>
+                </Link>
+              );
+            })}
+          </MyBoardList>
+          <div className="paging">
+            <div onClick={handleClickPrev}>이전</div>
+            {makePaging(pageOfPaging)}
+            <div onClick={handleClickNext}>다음</div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

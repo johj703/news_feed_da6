@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2';
 import { useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../../../supabase/supabase';
@@ -94,7 +95,11 @@ const Mymodify = () => {
 
     if (passwordChk) {
       // 유효성검사 실행
-      alert('nono');
+      Swal.fire({
+        icon: 'error',
+        title: '아니 뭐함;',
+        text: '비밀번호 확인 다시 해보슈'
+      });
       return;
     }
 
@@ -111,14 +116,31 @@ const Mymodify = () => {
       ...(passwordRef.current.value.length !== 0 && { password: passwordRef.current.value }),
       email: userInfo.email,
       data: {
-        user_name: userInfo.user_name,
+        display_name: userInfo.display_name,
         profile_url: userInfo.profile_url
       }
     });
 
-    alert('회원 정보가 수정되었습니다.');
-
-    return navigate('/mypage', { replace: true, state: { redirectedFrom: pathname } });
+    Swal.fire({
+      title: '정말 수정하시겠습니까?',
+      text: 'ㄹㅇ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: '수정 드가자',
+      cancelButtonText: '안할랭'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: '수정 완료!',
+          text: '정보가 새로 갱신되었습니다.',
+          icon: 'success'
+        }).then(() => {
+          return navigate('/mypage', { replace: true, state: { redirectedFrom: pathname } });
+        });
+      }
+    });
   };
 
   return (
@@ -137,7 +159,7 @@ const Mymodify = () => {
 
         <InputWrapper>
           <label htmlFor="user_name">이름</label>
-          <Input id="user_name" type="text" onChange={infoChange} value={userInfo.user_name || ''} />
+          <Input id="user_name" type="text" onChange={infoChange} value={userInfo.display_name || ''} />
         </InputWrapper>
 
         <InputWrapper>

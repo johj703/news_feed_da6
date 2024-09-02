@@ -8,23 +8,6 @@ const useFetch = (setUserInfo) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // await supabase.auth.signUp({
-      //   email: 'test@test.com',
-      //   password: '1q2w3e4r%',
-      //   options: {
-      //     data: {
-      //       user_name: '이름',
-      //       profile_url: null
-      //     }
-      //   }
-      // });
-
-      // 테스트계정 로그인을 위한 소스
-      await supabase.auth.signInWithPassword({
-        email: 'test@test.com',
-        password: '1q2w3e4r%'
-      });
-
       const {
         data: { user }
       } = await supabase.auth.getUser();
@@ -36,9 +19,11 @@ const useFetch = (setUserInfo) => {
       const userMetaData = user.user_metadata;
 
       setUserInfo({
-        user_name: userMetaData.user_name,
+        display_name: userMetaData.display_name,
         email: userMetaData.email,
-        profile_url: userMetaData.profile_url
+        profile_url:
+          userMetaData.profile_url ??
+          supabase.storage.from('profileImage').getPublicUrl('defaultImage/defaultImage').data.publicUrl
       });
     };
 
