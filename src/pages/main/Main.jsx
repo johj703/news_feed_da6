@@ -54,10 +54,11 @@ const Main = () => {
   }, []);
 
   // Supabase에서 Data를 읽어오는 API 함수 가지고 오기
+
   const readData = async () => {
     const { data: post, error } = await supabase.from('post').select('*');
     console.log(post);
-    setPosts(post);
+    setPosts(post.reverse());
   };
 
   return (
@@ -71,7 +72,7 @@ const Main = () => {
           </tr>
         </thead>
         <tbody>
-          {posts.map((post) => {
+          {currentPosts.map((post) => {
             return (
               <TableRow key={post.uuid} onClick={() => toDetail(post.uuid)}>
                 <TableData>{post.title}</TableData>
