@@ -15,6 +15,8 @@ import { supabase } from './../../supabase/supabase';
 
 const Main = () => {
   const [posts, setPosts] = useState([]);
+  // 로딩 데이터 상태 관리
+  const [loading, setLoading] = useState(true);
   // 현재 페이지 상태 관리
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -56,9 +58,11 @@ const Main = () => {
   // Supabase에서 Data를 읽어오는 API 함수 가지고 오기
 
   const readData = async () => {
+    setLoading(true); /* 데이터를 불러올 때 로딩 상태로 전환 */
     const { data: post, error } = await supabase.from('post').select('*');
     console.log(post);
     setPosts(post.reverse());
+    setLoading(false); /* 데이터를 로딩 완료 후 로딩 상태 해제 */
   };
 
   return (
