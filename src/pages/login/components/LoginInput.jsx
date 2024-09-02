@@ -8,6 +8,7 @@ const LoginInput = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  // 로그인 버튼
   const handleLogin = async (e) => {
     e.preventDefault();
 
