@@ -20,6 +20,25 @@ export const TableData = styled.td`
   vertical-align: top; /* 수직 정렬을 위쪽으로 */
 `;
 
+export const ImageCell = styled.td`
+  width: 50px; /* 이미지 셀의 넓이를 고정 */
+  padding: 10px;
+  text-align: center;
+  vertical-align: top;
+`;
+
+export const ProfileImage = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; /* 원형으로 만들기 */
+  background-color: #ccc; /* 비어있는 이미지 배경을 회색으로 설정 */
+`;
+
+export const ContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const ButtonContainer = styled.div`
   display: flex;
   margin-top: 20px;
