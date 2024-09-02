@@ -1,14 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import {
   BoardContainer,
+  ImageCell,
   Table,
-  TableHeader,
   TableRow,
-  TableData,
   Button,
   PaginationContainer,
   PageButton,
-  ButtonContainer
+  ButtonContainer,
+  ProfileImage
 } from './MainStyle';
 import { useEffect, useState } from 'react';
 import { supabase } from './../../supabase/supabase';
@@ -71,20 +71,18 @@ const Main = () => {
         <p>Loading 중 입니다</p>
       ) : (
         <Table>
-          <thead>
-            <tr>
-              <TableHeader>Title</TableHeader>
-              <TableHeader>Author</TableHeader>
-              <TableHeader>Date</TableHeader>
-            </tr>
-          </thead>
           <tbody>
+            {/* 현재 페이지에 해당하는 게시물들을 테이블 행으로 표시 */}
             {currentPosts.map((post) => {
               return (
                 <TableRow key={post.uuid} onClick={() => toDetail(post.uuid)}>
-                  <TableData>{post.title}</TableData>
-                  <TableData>{post.author_name}</TableData>
-                  <TableData>{post.date}</TableData>
+                  {/* 프로필 이미지를 나타내는 셀 */}
+                  <ImageCell>
+                    <ProfileImage
+                      src="https://kunfsmlsnsixsdzskbmx.supabase.co/storage/v1/object/public/post/cj8928@gmail.com/1725285104662"
+                      alt="Profile"
+                    />
+                  </ImageCell>
                 </TableRow>
               );
             })}
