@@ -15,6 +15,7 @@ const Form = ({ isModify }) => {
     email: '',
     uuid: ''
   });
+  const today = new Date().toLocaleString();
 
   const navigate = useNavigate();
 
@@ -26,9 +27,15 @@ const Form = ({ isModify }) => {
   };
   useEffect(() => {
     getPostData();
+    const userInfo = async () => {
+      const {
+        data: { user }
+      } = await supabase.auth.getUser();
+      console.log(user);
+    };
+    userInfo();
   }, []);
   const handleModifySubmit = async () => {
-    const today = new Date().toLocaleString();
     const { error } = await supabase
       .from('post')
       .update([
@@ -51,8 +58,6 @@ const Form = ({ isModify }) => {
   };
 
   const handleWriteSubmit = async () => {
-    const today = new Date().toLocaleString();
-
     const { error } = await supabase
       .from('post')
       .insert([
@@ -68,6 +73,7 @@ const Form = ({ isModify }) => {
       .select();
 
     if (error) {
+      alert(error.message);
       console.error(error);
       return;
     }
@@ -75,7 +81,7 @@ const Form = ({ isModify }) => {
   };
 
   const handleCancelButton = () => {
-    navigate('/detail/1');
+    navigate(-1);
   };
 
   return (
