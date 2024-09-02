@@ -14,11 +14,19 @@ export const InputContainer = styled.form`
   flex-direction: column;
 
   div {
+    display: flex;
+    align-items: center;
     margin-bottom: 15px;
 
     span {
-      display: block;
+      width: 100px;
     }
+  }
+
+  input {
+    flex: 1;
+    border: 1px solid #b4b4b4;
+    border-radius: 5px;
   }
 `;
 

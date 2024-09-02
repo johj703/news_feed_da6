@@ -75,7 +75,7 @@ const SignupInput = () => {
       options: {
         data: {
           display_name: formState.name,
-          profile_url: null
+          profile_url: supabase.storage.from('profileImage').getPublicUrl('defaultImage/defaultImage').data.publicUrl
         }
       }
     });
