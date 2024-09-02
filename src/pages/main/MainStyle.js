@@ -1,35 +1,23 @@
 import styled from 'styled-components';
 
 export const BoardContainer = styled.div`
-  padding: 20px;
+  width: 80%;
+  margin: 20px auto;
 `;
 
 export const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
-`;
-
-export const TableHeader = styled.th`
-  padding: 10px;
-  border-bottom: 2px solid #ccc;
-  text-align: center;
-  width: 25%; /* 각 셀의 너비 고정 */
-  box-sizing: border-box; /* 패딩 포함해서 크기 고정 */
 `;
 
 export const TableRow = styled.tr`
-  &:nth-child(even) {
-    background-color: #f9f9f9;
-  }
+  border-bottom: 1px solid #ddd;
 `;
 
 export const TableData = styled.td`
   padding: 10px;
-  border-bottom: 1px solid #ccc;
-  text-align: center;
-  width: 25%; /* 각 셀의 너비 고정 */
-  box-sizing: border-box; /* 패딩 포함해서 크기 고정 */
+  text-align: left;
+  vertical-align: top; /* 수직 정렬을 위쪽으로 */
 `;
 
 export const ButtonContainer = styled.div`
