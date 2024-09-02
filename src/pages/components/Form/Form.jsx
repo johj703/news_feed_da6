@@ -3,7 +3,7 @@ import TuiEditor from '../TuiEditor';
 import { useNavigate } from 'react-router-dom';
 import { ButtonContainer, FormContainer, RegisterButton, TitleInput } from './FormStyle';
 import { supabase } from '../../../supabase/supabase';
-import getPost from '../../detail/hooks/getPost';
+import getPost from '../../detail/components/getPost';
 
 const Form = ({ isModify }) => {
   const [post, setPost] = useState({
@@ -97,7 +97,9 @@ const Form = ({ isModify }) => {
 
       {isModify ? (
         <ButtonContainer>
-          <RegisterButton type="submit">수정</RegisterButton>
+          <RegisterButton type="submit" bgcolor="modify">
+            수정
+          </RegisterButton>
           <RegisterButton type="button" onClick={handleCancelButton}>
             취소
           </RegisterButton>

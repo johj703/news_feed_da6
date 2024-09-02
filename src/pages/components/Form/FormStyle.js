@@ -4,8 +4,15 @@ export const FormContainer = styled.form`
   margin: 0 auto;
 `;
 export const RegisterButton = styled.button`
-  margin: 10px;
+  margin-top: 10px;
   float: right;
+  width: 70px;
+  height: 30px;
+  border: none;
+  border-radius: 8px;
+  background-color: ${(props) => (props.bgcolor === 'modify' ? '#407221' : '#36474F')};
+  color: white;
+  cursor: pointer;
 `;
 
 export const TitleInput = styled.input`
@@ -23,4 +30,5 @@ export const TitleInput = styled.input`
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
+  gap: 20px;
 `;
