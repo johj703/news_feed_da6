@@ -8,7 +8,11 @@ import {
   PaginationContainer,
   PageButton,
   ButtonContainer,
-  ProfileImage
+  ProfileImage,
+  TableData,
+  ContentContainer,
+  TitleRow,
+  SubRow
 } from './MainStyle';
 import { useEffect, useState } from 'react';
 import { supabase } from './../../supabase/supabase';
@@ -78,11 +82,19 @@ const Main = () => {
                 <TableRow key={post.uuid} onClick={() => toDetail(post.uuid)}>
                   {/* 프로필 이미지를 나타내는 셀 */}
                   <ImageCell>
-                    <ProfileImage
-                      src="https://kunfsmlsnsixsdzskbmx.supabase.co/storage/v1/object/public/post/cj8928@gmail.com/1725285104662"
-                      alt="Profile"
-                    />
+                    <ProfileImage src={post.thumbnail_url} alt="Profile" />
                   </ImageCell>
+
+                  {/* 게시물 내용을 나타내는 셀 */}
+                  <TableData>
+                    <ContentContainer>
+                      <TitleRow>{post.title}</TitleRow>
+                      <SubRow>
+                        <span>{post.author_name}</span>
+                        <span>{post.date}</span>
+                      </SubRow>
+                    </ContentContainer>
+                  </TableData>
                 </TableRow>
               );
             })}

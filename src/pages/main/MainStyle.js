@@ -48,7 +48,8 @@ export const SubRow = styled.div`
   color: #555;
   font-size: 0.9em;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 25px;
 `;
 
 export const ButtonContainer = styled.div`
