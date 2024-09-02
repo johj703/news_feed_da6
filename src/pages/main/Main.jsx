@@ -16,6 +16,7 @@ import { supabase } from './../../supabase/supabase';
 const Main = () => {
   const [posts, setPosts] = useState([]);
 
+  // 하드코딩 한 데이터들
   // const posts = [
   //   {
   //     id: 1,
@@ -176,20 +177,25 @@ const Main = () => {
   // 페이지 변경 하는 함수
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  // useNavegate 함수를 navigate 변수에 담기
   const navigate = useNavigate();
 
+  // navigate를 사용해서 toWrite를 사용해서 write 페이지로 이동하도록 작성
   const toWrite = () => {
     navigate('/write');
   };
 
+  // navigate를 사용해서 detail 페이지로 이동하도록 작성
   const toDetail = (id) => {
     navigate(`/detail/${id}`);
   };
 
+  // 컴포넌트가 처음 렌더링 될 때, readData함수가 실행되도록 작성
   useEffect(() => {
     readData();
   }, []);
 
+  // Supabase에서 Data를 읽어오는 API 함수 가지고 오기
   const readData = async () => {
     const { data: post, error } = await supabase.from('post').select('*');
     console.log(post);
