@@ -191,7 +191,6 @@ const Main = () => {
 
   return (
     <BoardContainer>
-      <Button onClick={toWrite}>글쓰기</Button>
       <Table>
         <thead>
           <tr>
@@ -214,7 +213,9 @@ const Main = () => {
           })}
         </tbody>
       </Table>
-
+      <div>
+        <Button onClick={toWrite}>글쓰기</Button>
+      </div>
       {/* 게시물이 10개 이상일 때 페이지네이션을 렌더링 */}
       {posts.length > 10 && (
         <PaginationContainer>
