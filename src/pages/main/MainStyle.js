@@ -14,6 +14,8 @@ export const TableHeader = styled.th`
   padding: 10px;
   border-bottom: 2px solid #ccc;
   text-align: center;
+  width: 25%; /* 각 셀의 너비 고정 */
+  box-sizing: border-box; /* 패딩 포함해서 크기 고정 */
 `;
 
 export const TableRow = styled.tr`
@@ -26,6 +28,8 @@ export const TableData = styled.td`
   padding: 10px;
   border-bottom: 1px solid #ccc;
   text-align: center;
+  width: 25%; /* 각 셀의 너비 고정 */
+  box-sizing: border-box; /* 패딩 포함해서 크기 고정 */
 `;
 
 export const ButtonContainer = styled.div`
