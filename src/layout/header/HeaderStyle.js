@@ -9,6 +9,13 @@ export const HeaderInner = styled.header`
   img {
     height: 48px;
   }
+
+  @media (max-width: 780px) {
+    padding: 20px 24px;
+    img {
+      height: 36px;
+    }
+  }
 `;
 
 export const MemberLink = styled.ul`
@@ -25,5 +32,11 @@ export const MemberLink = styled.ul`
     font-size: 24px;
     color: #fff;
     text-decoration: none;
+  }
+  @media (max-width: 780px) {
+    gap: 32px;
+    a {
+      font-size: 18px;
+    }
   }
 `;

@@ -5,11 +5,19 @@ export const Title = styled.div`
   font-family: 'YoonChildfundkoreaDaeHan', sans-serif;
   font-size: 42px;
   text-align: center;
+  @media (max-width: 780px) {
+    margin: 40px 0;
+    font-size: 36px;
+  }
 `;
 
 export const ModifyForm = styled.form`
   display: flex;
-  gap: 80px;
+  gap: 40px;
+  @media (max-width: 780px) {
+    flex-direction: column;
+    gap: 32px;
+  }
 `;
 
 export const ProfileImageWrap = styled.div`
@@ -34,6 +42,10 @@ export const ProfileImage = styled.div`
     padding: 50% 0;
   }
   > img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     min-width: 100%;
     min-height: 100%;
     object-fit: cover;
@@ -44,6 +56,7 @@ export const ImageButtonArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 20px;
   width: 100%;
   margin-top: 40px;
@@ -53,6 +66,7 @@ export const ImageButtonArea = styled.div`
     align-items: center;
     justify-content: center;
     width: calc(50% - 10px);
+    min-width: 140px;
     height: 48px;
     background: #407221;
     font-size: 20px;
@@ -71,17 +85,29 @@ export const ImageButtonArea = styled.div`
     align-items: center;
     justify-content: center;
     width: calc(50% - 10px);
+    min-width: 140px;
     height: 48px;
     background: #36474f;
     font-size: 20px;
     color: #fff;
     border-radius: 8px;
   }
+
+  @media (max-width: 780px) {
+    label,
+    button {
+      height: 40px;
+      font-size: 16px;
+    }
+  }
 `;
 
 export const Box = styled.div`
   width: 62.5%;
   text-align: right;
+  @media (max-width: 780px) {
+    width: 100%;
+  }
 `;
 export const InnerBox = styled.div`
   display: flex;
@@ -91,6 +117,10 @@ export const InnerBox = styled.div`
   padding: 40px 50px;
   border: 3px solid #aaa;
   border-radius: 8px;
+  @media (max-width: 780px) {
+    padding: 24px;
+    gap: 16px;
+  }
 `;
 
 export const InputWrapper = styled.div`
@@ -103,6 +133,9 @@ export const InputWrapper = styled.div`
     font-family: 'YoonChildfundkoreaManSeh', sans-serif;
     font-size: 28px;
     text-align: left;
+    @media (max-width: 780px) {
+      font-size: 18px;
+    }
   }
 `;
 
@@ -116,6 +149,10 @@ export const Input = styled.input`
 
   &:read-only {
     background: #c2c2c2;
+  }
+  @media (max-width: 780px) {
+    height: 48px;
+    font-size: 16px;
   }
 `;
 
@@ -138,4 +175,9 @@ export const SubmitButton = styled.button`
   color: #fff;
   font-size: 20px;
   margin: 40px 0 0;
+  @media (max-width: 780px) {
+    width: 100%;
+    line-height: 48px;
+    margin-top: 32px;
+  }
 `;

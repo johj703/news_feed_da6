@@ -4,10 +4,15 @@ export const MyPageWrap = styled.div`
   display: flex;
   gap: 50px;
   margin: 80px auto;
+
+  @media (max-width: 780px) {
+    flex-direction: column;
+  }
 `;
 
-// 마이페이지 상단 : 회원정보 박스 레이아웃
+// 마이페이지 : 회원정보 박스 레이아웃
 export const InfoBox = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,10 +32,19 @@ export const InfoBox = styled.div`
     border-radius: 8px;
     background: #36474f;
   }
+
+  @media (max-width: 780px) {
+    gap: 24px;
+    a {
+      font-size: 16px;
+      padding: 6px 12px;
+    }
+  }
 `;
 
 // 프로필 이미지
 export const ProfileImg = styled.span`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -46,6 +60,10 @@ export const ProfileImg = styled.span`
     padding: 50% 0;
   }
   img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     min-width: 100%;
     min-height: 100%;
     object-fit: cover;
@@ -66,10 +84,24 @@ export const MemberInfo = styled.div`
     margin-top: 18px;
     font-size: 24px;
   }
+
+  @media (max-width: 780px) {
+    h4.name {
+      font-size: 24px;
+    }
+    span.email {
+      margin-top: 12px;
+      font-size: 18px;
+    }
+  }
 `;
 
 export const BoardArea = styled.div`
   width: 61%;
+
+  @media (max-width: 780px) {
+    width: 100%;
+  }
 `;
 
 // 마이페이지 하단 : 게시글 박스 레이아웃
@@ -96,6 +128,9 @@ export const MyArticle = styled.li`
   + li {
     border-top: 2px solid #aaa;
   }
+
+@media (max-width: 780px) {
+  padding: 12px 16px
 `;
 
 export const Paging = styled.div`

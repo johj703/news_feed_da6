@@ -27,6 +27,7 @@ html {
 }
 body {
   margin: 0;
+  min-width: 340px;
 }
 main {
   max-width: 1280px;
