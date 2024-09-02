@@ -41,7 +41,7 @@ const Main = () => {
   // 페이지 변경 하는 함수(페이지 번호 클릭하면 해당 페이지로 이동)
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  // useNavegate 함수를 navigate 변수에 담기
+  // useNavigate 함수를 navigate 변수에 담기
   const navigate = useNavigate();
 
   // navigate를 사용해서 toWrite를 사용해서 write 페이지로 이동하도록 작성
