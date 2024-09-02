@@ -4,6 +4,7 @@ import { DetailContainer, ModifyButton, Title, TitleContainer, UserInfoContainer
 import { Viewer } from '@toast-ui/react-editor';
 import { useLocation, useNavigate } from 'react-router-dom';
 import getPost from './hooks/getPost';
+import { ButtonContainer } from '../components/Form/FormStyle';
 
 const Detail = () => {
   const [test, setTest] = useState({});
@@ -23,6 +24,7 @@ const Detail = () => {
     });
     console.log(data);
   };
+
   const signUp = async () => {
     let { data, error } = await supabase.auth.signUp({
       email: 'cj8928@gmail.com',
@@ -35,29 +37,49 @@ const Detail = () => {
     });
   };
 
+  const logout = async () => {
+    let { error } = await supabase.auth.signOut();
+  };
+
+  const handleUserInfo = async () => {
+    const {
+      data: { user }
+    } = await supabase.auth.getUser();
+    console.log(user);
+  };
+
   useEffect(() => {
     getPostData();
-
-    const testUser = async () => {
+    const userInfo = async () => {
       const {
         data: { user }
       } = await supabase.auth.getUser();
-
-      if (user.user_metadata.display_name === test.author_name) {
+      if (!user) {
+        return;
+      }
+      if (user.user_metadata.email === test.email) {
         setIsAuthor(true);
       }
     };
-    testUser();
-  }, [test.author_name]);
-
+    userInfo();
+  }, [test.email]);
   const handleModifyButton = () => {
     navigate(`${location.pathname}/modify`);
+  };
+
+  const handleDeleteButton = async () => {
+    console.log('삭제할거임');
+    // const { error } = await supabase.from('post').delete().eq('uuid', '');
+    alert('삭제되었습니다.');
+    navigate('/');
   };
 
   return (
     <DetailContainer>
       <button onClick={signUp}>회원가입</button>
       <button onClick={testLoginButton}>로그인</button>
+      <button onClick={logout}>로그아웃</button>
+      <button onClick={handleUserInfo}>유저정보</button>
       <ViewContainer className="view-container">
         <TitleContainer>
           <Title>{test.title}</Title>
@@ -65,7 +87,12 @@ const Detail = () => {
         </TitleContainer>
         <UserInfoContainer>{test.author_name}</UserInfoContainer>
         {test.content && <Viewer className="viewer" initialValue={test.content} />}
-        {isAuthor && <ModifyButton onClick={() => handleModifyButton()}>수정</ModifyButton>}
+        {isAuthor && (
+          <ButtonContainer>
+            <ModifyButton onClick={() => handleModifyButton()}>수정</ModifyButton>
+            <ModifyButton onClick={() => handleDeleteButton()}>삭제</ModifyButton>
+          </ButtonContainer>
+        )}
       </ViewContainer>
     </DetailContainer>
   );
