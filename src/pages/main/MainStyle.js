@@ -30,6 +30,7 @@ export const TableData = styled.td`
 
 export const ButtonContainer = styled.div`
   display: flex;
+  margin-top: 20px;
   justify-content: flex-end;
 `;
 
