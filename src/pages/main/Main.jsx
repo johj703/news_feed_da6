@@ -7,7 +7,8 @@ import {
   TableData,
   Button,
   PaginationContainer,
-  PageButton
+  PageButton,
+  ButtonContainer
 } from './MainStyle';
 import { useEffect, useState } from 'react';
 import { supabase } from './../../supabase/supabase';
@@ -213,9 +214,9 @@ const Main = () => {
           })}
         </tbody>
       </Table>
-      <div>
+      <ButtonContainer>
         <Button onClick={toWrite}>글쓰기</Button>
-      </div>
+      </ButtonContainer>
       {/* 게시물이 10개 이상일 때 페이지네이션을 렌더링 */}
       {posts.length > 10 && (
         <PaginationContainer>

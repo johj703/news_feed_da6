@@ -28,6 +28,11 @@ export const TableData = styled.td`
   text-align: center;
 `;
 
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
 export const Button = styled.button`
   padding: 10px 15px;
   font-size: 16px;
@@ -38,7 +43,6 @@ export const Button = styled.button`
   cursor: pointer;
   margin-bottom: 20px; /* 버튼, 테이블 간 간격 추가 */
   /* align-self: flex-start; 버튼 좌측 정렬 */
-  justify-content: flex-end;
   &:hover {
     background-color: #0056b3;
   }
