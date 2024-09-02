@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FormContainer } from './SignupInputStyle';
+import { FormContainer, InputContainer, SigninButton } from './SignupInputStyle';
 import { supabase } from '../../../supabase/supabase';
 import { useNavigate } from 'react-router-dom';
 
@@ -92,9 +92,9 @@ const SignupInput = () => {
   return (
     <FormContainer>
       <h1>회원 가입</h1>
-      <form onSubmit={handleSignup}>
+      <InputContainer onSubmit={handleSignup}>
         <div>
-          <p>이름</p>
+          <span>이름</span>
           <input
             type="text"
             value={formState.name}
@@ -102,22 +102,22 @@ const SignupInput = () => {
           />
         </div>
         <div>
-          <p>아이디</p>
+          <span>아이디</span>
           <input type="text" value={formState.email} onChange={handleEmailCheck} />
           <p>{formState.emailError}</p>
         </div>
         <div>
-          <p>비밀번호</p>
+          <span>비밀번호</span>
           <input type="password" value={formState.password} autoComplete="off" onChange={passwordCheck} />
           <p>{formState.passwordError}</p>
         </div>
         <div>
-          <p>비밀번호 확인</p>
+          <span>비밀번호 확인</span>
           <input type="password" value={formState.verifyPssword} autoComplete="off" onChange={VerifyPasswordCheck} />
           <p>{formState.verifyPsswordError}</p>
         </div>
-        <button type="submit">가입하기</button>
-      </form>
+        <SigninButton type="submit">가입하기</SigninButton>
+      </InputContainer>
     </FormContainer>
   );
 };
