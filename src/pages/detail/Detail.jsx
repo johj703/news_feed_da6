@@ -3,8 +3,9 @@ import { supabase } from '../../supabase/supabase';
 import { DetailContainer, ModifyButton, Title, TitleContainer, UserInfoContainer, ViewContainer } from './DetailStyle';
 import { Viewer } from '@toast-ui/react-editor';
 import { useLocation, useNavigate } from 'react-router-dom';
-import getPost from './hooks/getPost';
+import getPost from './components/getPost';
 import { ButtonContainer } from '../components/Form/FormStyle';
+import Comments from './components/comment/Comments';
 
 const Detail = () => {
   const [test, setTest] = useState({});
@@ -76,23 +77,31 @@ const Detail = () => {
 
   return (
     <DetailContainer>
-      <button onClick={signUp}>회원가입</button>
+      {/* <button onClick={signUp}>회원가입</button>
       <button onClick={testLoginButton}>로그인</button>
       <button onClick={logout}>로그아웃</button>
-      <button onClick={handleUserInfo}>유저정보</button>
+      <button onClick={handleUserInfo}>유저정보</button> */}
       <ViewContainer className="view-container">
         <TitleContainer>
           <Title>{test.title}</Title>
-          <span>{test.date}</span>
         </TitleContainer>
-        <UserInfoContainer>{test.author_name}</UserInfoContainer>
+        <UserInfoContainer>
+          <span>{test.author_name}</span>
+          <span>{test.date}</span>
+        </UserInfoContainer>
+
         {test.content && <Viewer className="viewer" initialValue={test.content} />}
         {isAuthor && (
           <ButtonContainer>
-            <ModifyButton onClick={() => handleModifyButton()}>수정</ModifyButton>
-            <ModifyButton onClick={() => handleDeleteButton()}>삭제</ModifyButton>
+            <ModifyButton onClick={() => handleModifyButton()} bgcolor="modify">
+              수정
+            </ModifyButton>
+            <ModifyButton onClick={() => handleDeleteButton()} bgcolor="delete">
+              삭제
+            </ModifyButton>
           </ButtonContainer>
         )}
+        <Comments />
       </ViewContainer>
     </DetailContainer>
   );
