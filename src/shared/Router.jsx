@@ -19,10 +19,10 @@ const Router = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/write" element={<Write />} />
+          <Route path="/mypage" element={<Mypage />} />
+          <Route path="/mypage/mymodify" element={<Mymodify />} />
+
           <Route path="/comments/:postId" element={<Comment />} />
-          <Route path="/mypage" element={<Mypage />}>
-            <Route path="mymodify" element={<Mymodify />} />
-          </Route>
 
           <Route path="/detail/:id" element={<Detail />} />
           <Route path="/detail/:id/modify" element={<Modify />} />
