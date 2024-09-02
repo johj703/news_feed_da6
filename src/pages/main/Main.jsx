@@ -15,8 +15,7 @@ import { supabase } from './../../supabase/supabase';
 
 const Main = () => {
   const [posts, setPosts] = useState([]);
-
-  // 페이지네이션 상태 관리
+  // 현재 페이지 상태 관리
   const [currentPage, setCurrentPage] = useState(1);
 
   // 페이지 하나당 포스트의 개수는 10개인 상수 생성
@@ -26,11 +25,14 @@ const Main = () => {
   const totalPages = Math.ceil(posts.length / postsPerPage);
 
   // 현재 페이지에 해당하는 게시물 계산
+  // 1. 현재 페이지의 마지막 게시물 인덱스
   const indexOfLastPost = currentPage * postsPerPage;
+  // 2. 현재 페이지의 첫 번째 게시물 인덱스
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  // 3. 현재 페이지에 표시할 게시물 배열
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
-  // 페이지 변경 하는 함수
+  // 페이지 변경 하는 함수(페이지 번호 클릭하면 해당 페이지로 이동)
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   // useNavegate 함수를 navigate 변수에 담기
@@ -87,8 +89,12 @@ const Main = () => {
       {posts.length > 10 && (
         <PaginationContainer>
           {[...Array(totalPages)].map((_, index) => (
-            <PageButton key={index + 1} onClick={() => paginate(index + 1)} isActive={currentPage === index + 1}>
-              {index + 1}
+            <PageButton
+              key={index + 1}
+              onClick={() => paginate(index + 1)} /* 클릭 하면 해당 페이지로 이동 */
+              isActive={currentPage === index + 1} /* 현재 페이지는 활성화 상태로 표시 */
+            >
+              {index + 1} {/* 페이지 번호 */}
             </PageButton>
           ))}
         </PaginationContainer>
