@@ -186,6 +186,7 @@ const Main = () => {
   const readData = async () => {
     const { data: post, error } = await supabase.from('post').select('*');
     console.log(post);
+    setPosts(post);
   };
 
   return (
@@ -201,7 +202,7 @@ const Main = () => {
           </tr>
         </thead>
         <tbody>
-          {currentPosts.map((post) => {
+          {posts.map((post) => {
             return (
               <TableRow key={post.id}>
                 <TableData>{post.id}</TableData>
