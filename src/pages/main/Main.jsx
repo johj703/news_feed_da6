@@ -67,26 +67,30 @@ const Main = () => {
 
   return (
     <BoardContainer>
-      <Table>
-        <thead>
-          <tr>
-            <TableHeader>Title</TableHeader>
-            <TableHeader>Author</TableHeader>
-            <TableHeader>Date</TableHeader>
-          </tr>
-        </thead>
-        <tbody>
-          {currentPosts.map((post) => {
-            return (
-              <TableRow key={post.uuid} onClick={() => toDetail(post.uuid)}>
-                <TableData>{post.title}</TableData>
-                <TableData>{post.author_name}</TableData>
-                <TableData>{post.date}</TableData>
-              </TableRow>
-            );
-          })}
-        </tbody>
-      </Table>
+      {loading ? (
+        <p>Loading 중 입니다</p>
+      ) : (
+        <Table>
+          <thead>
+            <tr>
+              <TableHeader>Title</TableHeader>
+              <TableHeader>Author</TableHeader>
+              <TableHeader>Date</TableHeader>
+            </tr>
+          </thead>
+          <tbody>
+            {currentPosts.map((post) => {
+              return (
+                <TableRow key={post.uuid} onClick={() => toDetail(post.uuid)}>
+                  <TableData>{post.title}</TableData>
+                  <TableData>{post.author_name}</TableData>
+                  <TableData>{post.date}</TableData>
+                </TableRow>
+              );
+            })}
+          </tbody>
+        </Table>
+      )}
       <ButtonContainer>
         <Button onClick={toWrite}>글쓰기</Button>
       </ButtonContainer>
