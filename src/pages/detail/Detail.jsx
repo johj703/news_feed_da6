@@ -1,5 +1,5 @@
 import Swal from 'sweetalert2';
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { supabase } from '../../supabase/supabase';
 import {
   BookMark,
@@ -49,6 +49,10 @@ const Detail = () => {
     navigate('/');
   };
 
+  const creationTimeConverter = useCallback((time) => {
+    return new Date(time).toLocaleString();
+  }, []);
+
   const userData = user?.user_metadata.bookMark;
 
   const handleAddBookMark = async () => {
@@ -93,7 +97,11 @@ const Detail = () => {
 
         <UserInfoContainer>
           <span>{contents.author_name}</span>
-          <span>{contents.date}</span>
+          <span>
+            {contents.updated_at
+              ? creationTimeConverter(contents.updated_at)
+              : creationTimeConverter(contents.created_at)}
+          </span>
         </UserInfoContainer>
 
         <ContentArea>{contents.content && <Viewer className="viewer" initialValue={contents.content} />}</ContentArea>
