@@ -68,9 +68,8 @@ const Main = () => {
       console.error(error);
       return;
     }
-    console.log(post);
     setPosts(post);
-    setLoading(false); /* 데이터를 로딩 완료 후 로딩 상태 해제 */
+    setLoading(false);
   };
 
   const creationTimeConverter = useCallback((time) => {
@@ -99,7 +98,11 @@ const Main = () => {
                       <TitleRow>{post.title}</TitleRow>
                       <SubRow>
                         <span>{post.author_name}</span>
-                        <span>{creationTimeConverter(post.created_at)}</span>
+                        <span>
+                          {post.updated_at
+                            ? creationTimeConverter(post.updated_at)
+                            : creationTimeConverter(post.created_at)}
+                        </span>
                       </SubRow>
                     </ContentContainer>
                   </TableData>

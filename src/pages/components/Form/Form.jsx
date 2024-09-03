@@ -7,6 +7,7 @@ import getPost from '../../detail/components/getPost';
 import { UserContext } from '../../../context/UserConext';
 
 const Form = ({ isModify }) => {
+  const now = new Date().toISOString();
   const params = useParams();
   const [post, setPost] = useState({
     title: '',
@@ -14,7 +15,9 @@ const Form = ({ isModify }) => {
     author_name: '',
     author_profile_url: '',
     email: '',
-    uuid: ''
+    uuid: '',
+    created_at: '',
+    updated_at: ''
   });
   const { user } = useContext(UserContext);
 
@@ -26,7 +29,7 @@ const Form = ({ isModify }) => {
       setPost({ ...response });
     }
   };
-
+  console.log(post);
   const findThumbnailImage = () => {
     const regex = /!\[[^\]]*\]\(([^)]+)\)/;
     const match = regex.exec(post.content);
@@ -55,7 +58,8 @@ const Form = ({ isModify }) => {
           title: post.title,
           content: post.content,
           email: user.email,
-          thumbnail_url: findThumbnailImage()
+          thumbnail_url: findThumbnailImage(),
+          updated_at: now
         }
       ])
       .eq('uuid', post.uuid)

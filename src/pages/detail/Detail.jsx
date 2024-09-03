@@ -50,7 +50,11 @@ const Detail = () => {
 
         <UserInfoContainer>
           <span>{contents.author_name}</span>
-          <span>{creationTimeConverter(contents.created_at)}</span>
+          <span>
+            {contents.updated_at
+              ? creationTimeConverter(contents.updated_at)
+              : creationTimeConverter(contents.created_at)}
+          </span>
         </UserInfoContainer>
 
         {contents.content && <Viewer className="viewer" initialValue={contents.content} />}
