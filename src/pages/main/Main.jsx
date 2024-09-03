@@ -25,7 +25,7 @@ const Main = () => {
   const [currentPageGroup, setCurrentPageGroup] = useState(0);
 
   // 페이지 하나당 포스트의 개수는 10개인 상수 생성, 한 번에 보여줄 페이지 버튼 상수 생성
-  const postsPerPage = 10;
+  const postsPerPage = 1;
   const pageGroupSize = 10;
 
   // 총 페이지 수 계산
@@ -118,20 +118,23 @@ const Main = () => {
         <Button onClick={toWrite}>글쓰기</Button>
       </ButtonContainer>
       {/* 게시물이 10개 이상일 때 페이지네이션을 렌더링 */}
-      {posts.length > 10 && (
+      {posts.length > postsPerPage && (
         <PaginationContainer>
           <PageButton onClick={handlePrevGroup} disabled={currentPageGroup === 1}>
             &lt; {/* 왼쪽 화살표 */}
           </PageButton>
-          {[...Array(totalPages)].map((_, index) => (
-            <PageButton
-              key={index + 1}
-              onClick={() => paginate(index + 1)} /* 클릭 하면 해당 페이지로 이동 */
-              isActive={currentPage === index + 1} /* 현재 페이지는 활성화 상태로 표시 */
-            >
-              {index + 1} {/* 페이지 번호 */}
-            </PageButton>
-          ))}
+          {[...Array(totalPages)].map((_, index) => {
+            const pageNumber = index + 1;
+            return (
+              <PageButton
+                key={pageNumber}
+                onClick={() => paginate(pageNumber)} /* 클릭 하면 해당 페이지로 이동 */
+                isActive={currentPage === pageNumber} /* 현재 페이지는 활성화 상태로 표시 */
+              >
+                {pageNumber} {/* 페이지 번호 */}
+              </PageButton>
+            );
+          })}
           <PageButton onClick={handleNextGroup} disabled={currentPage === totalPages}>
             &gt; {/* 오른쪽 화살표 */}
           </PageButton>
