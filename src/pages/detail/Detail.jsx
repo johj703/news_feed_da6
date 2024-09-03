@@ -50,7 +50,8 @@ const Detail = () => {
   };
 
   const creationTimeConverter = useCallback((time) => {
-    return new Date(time).toLocaleString();
+    const writeTime = new Date(time).toLocaleString();
+    return writeTime !== 'Invalid Date' && new Date(time).toLocaleString();
   }, []);
 
   const userData = user?.user_metadata.bookMark;
