@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const FormContainer = styled.div`
-  max-width: 600px; /* 너비를 600px로 확장 */
+  max-width: 800px; /* 너비를 600px로 확장 */
+  width: 92%;
   margin-top: 500px;
   padding: 20px;
   border: 1px solid #ddd;
