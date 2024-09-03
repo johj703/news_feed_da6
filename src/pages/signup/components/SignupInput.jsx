@@ -86,7 +86,6 @@ const SignupInput = () => {
         return;
       }
     } else {
-      console.log('성공!=>', data);
       navigate('/login');
     }
   };

@@ -29,7 +29,7 @@ const Form = ({ isModify }) => {
       setPost({ ...response });
     }
   };
-  console.log(post);
+
   const findThumbnailImage = () => {
     const regex = /!\[[^\]]*\]\(([^)]+)\)/;
     const match = regex.exec(post.content);

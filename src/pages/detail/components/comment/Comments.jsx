@@ -31,7 +31,7 @@ const Comments = () => {
           post_id: params.id,
           content: commentInput,
           comment_author_name: user.user_metadata.display_name,
-          comment_author_profile_url: user.user_metadata.profile_url,
+          comment_author_profile_url: user.user_metadata.profile_url ?? user.user_metadata.avatar_url,
           comment_author_email: user.email
         }
       ])

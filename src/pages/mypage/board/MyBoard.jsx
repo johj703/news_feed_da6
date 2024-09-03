@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../../../supabase/supabase';
 import { Link, useSearchParams } from 'react-router-dom';
-import { MyArticle, MyBoardList, Paging } from '../MypageStyle';
+import { BlankBoard, MyArticle, MyBoardList, Paging } from '../MypageStyle';
 
 import prev from '../../../assets/prev.png';
 import next from '../../../assets/next.png';
@@ -97,7 +97,7 @@ const MyBoard = () => {
 
   return (
     <>
-      {myArticle.data && (
+      {myArticle.data ? (
         <>
           <MyBoardList>
             {myArticle.data.map((item) => {
@@ -120,6 +120,8 @@ const MyBoard = () => {
             </div>
           </Paging>
         </>
+      ) : (
+        <BlankBoard>작성한 게시글이 없습니다.</BlankBoard>
       )}
     </>
   );
