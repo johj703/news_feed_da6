@@ -15,9 +15,9 @@ const TuiEditor = ({ setPost, post }) => {
   useEffect(() => {
     if (editorRef.current) {
       const editorInstance = editorRef.current.getInstance();
-      editorInstance.setMarkdown(post.content || ''); // post.contents가 없을 때 기본값을 빈 문자열로 설정
+      editorInstance.setMarkdown(post.content || '');
     }
-  }, [post.content]);
+  }, []);
 
   const handleEditorChange = () => {
     const editorInstance = editorRef.current.getInstance();
@@ -46,7 +46,7 @@ const TuiEditor = ({ setPost, post }) => {
       height="500px"
       plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
       hooks={{ addImageBlobHook: handleImage }}
-      onChange={() => handleEditorChange}
+      onChange={handleEditorChange}
     />
   );
 };
