@@ -18,9 +18,12 @@ export const UserProvider = ({ children }) => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ? session?.user : null);
 
-      session?.user
-        ? localStorage.setItem('userData', JSON.stringify(session?.user))
-        : localStorage.removeItem('userData');
+      if (session?.user) {
+        localStorage.setItem('userData', JSON.stringify(session?.user));
+        sessionStorage.setItem('isLogin', true);
+      } else {
+        localStorage.removeItem('userData');
+      }
     });
     return () => {
       authListener.subscription.unsubscribe();
