@@ -1,65 +1,38 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { supabase } from '../../../../supabase/supabase';
-import {
-  CommentBox,
-  CommentInfo,
-  CommentInput,
-  CommentInputButton,
-  CommentInputForm,
-  CommentLastInfoBox,
-  CommentModifyButton,
-  CommentProfile,
-  CommentsContainer,
-  CommentsItemBox,
-  CommentTitle
-} from './CommentsStyle';
-import CommentUpdateForm from './CommentUpdateForm';
+import { CommentInput, CommentInputButton, CommentInputForm, CommentsContainer, CommentTitle } from './CommentsStyle';
 import CommentItem from './CommentItem';
+import { UserContext } from '../../../../context/UserConext';
+import { useComments } from '../../hooks/useComments';
 
 const Comments = () => {
   const params = useParams();
-  const [comments, setComments] = useState([]);
   const [commentInput, setCommentInput] = useState('');
-  const [testUser, setTestUser] = useState({ name: '', profile_url: '' });
-  const [isUpdate, setIsUpdate] = useState(false);
+  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
+  const { comments, getComments, setComments } = useComments();
 
-  useEffect(() => {
-    const userInfo = async () => {
-      const {
-        data: { user }
-      } = await supabase.auth.getUser();
-      if (!user) {
-        return;
-      }
-      console.log(user.user_metadata.display_name, user.profile_url);
-      setTestUser({ name: user.user_metadata.display_name, profile_url: user.profile_url });
-    };
-    userInfo();
-  }, []);
-
-  const getComments = async () => {
-    const { data, error } = await supabase
-      .from('comment')
-      .select('*')
-      .eq('post_id', params.id)
-      .order('created_at', { ascending: true });
-    console.log(data);
-    if (error) {
-      console.log('댓글을 불러오는 중에 오류가 발생했습니다.', error);
-    } else {
-      setComments(data);
-    }
-  };
   const handleAddComment = async () => {
+    if (commentInput.length === 0) {
+      alert('댓글을 입력해주세요.');
+      return;
+    }
+    if (!user) {
+      alert('로그인하고 댓글을 작성해주세요!');
+      navigate('/login');
+      return;
+    }
+
     const { error } = await supabase
       .from('comment')
       .insert([
         {
           post_id: params.id,
           content: commentInput,
-          comment_author_name: testUser.name,
-          comment_author_profile_url: testUser.profile_url
+          comment_author_name: user.user_metadata.display_name,
+          comment_author_profile_url: user.user_metadata.profile_url,
+          comment_author_email: user.email
         }
       ])
       .select();
@@ -68,71 +41,19 @@ const Comments = () => {
       return;
     }
     setCommentInput('');
-    getComments();
-  };
-
-  const handleUpdateComment = async (id) => {
-    setIsUpdate(true);
-    // const { error } = await supabase
-    //   .from('comment')
-    //   .update([
-    //     {
-    //       post_id: params.id,
-    //       content: commentInput,
-    //       comment_author_name: testUser.name,
-    //       comment_author_profile_url: testUser.profile_url
-    //     }
-    //   ])
-    //   .eq('comments_id', id)
-    //   .select();
-    // if (error) {
-    //   console.error(error);
-    //   return;
-    // }
-  };
-
-  const handleDeleteComment = async (id) => {
-    console.log(id);
-  };
-
-  /**댓글 생성 시간 바꿔주는 함수 */
-  const commentCreationTimeConverter = (time) => {
-    return new Date(time).toLocaleString();
+    getComments(params.id);
   };
 
   useEffect(() => {
-    getComments();
-  }, []);
+    getComments(params.id);
+  }, [getComments, params.id]);
 
   return (
     <div>
       <CommentsContainer>
         <CommentTitle>댓글</CommentTitle>
         {comments.map((comment) => (
-          <CommentItem key={comment.comments_id} data={comment} />
-          // <CommentsItemBox key={comment.comments_id}>
-          //   <CommentProfile>여긴 프로필 이미지</CommentProfile>
-          //   <CommentBox>
-          //     <span>{comment.content}</span>
-          //     <CommentLastInfoBox>
-          //       <div>
-          //         <CommentInfo>{comment.comment_author_name}</CommentInfo>
-          //         <CommentInfo>{commentCreationTimeConverter(comment.created_at)}</CommentInfo>
-          //       </div>
-
-          //       <div>
-          //         <CommentModifyButton onClick={() => handleUpdateComment(comment.comments_id)}>
-          //           수정
-          //         </CommentModifyButton>
-          //         <span>|</span>
-          //         <CommentModifyButton onClick={() => handleDeleteComment(comment.comments_id)}>
-          //           삭제
-          //         </CommentModifyButton>
-          //       </div>
-          //     </CommentLastInfoBox>
-          //   </CommentBox>
-          //   {isUpdate && <CommentUpdateForm setIsUpdate={setIsUpdate} />}
-          // </CommentsItemBox>
+          <CommentItem key={comment.uuid} data={comment} setComments={setComments} />
         ))}
       </CommentsContainer>
       <CommentInputForm
