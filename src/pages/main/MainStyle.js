@@ -145,6 +145,12 @@ export const PageButton = styled.button`
   background: none;
   border: 0;
   border-bottom: ${(props) => (props.$isActive ? '2px solid #36474f' : 'none')};
+  ${({ disabled }) =>
+    disabled &&
+    `
+    pointer-events: none; /* 비활성화 상태에서 클릭 방지 */
+    opacity: 0.5; /* 비활성화된 버튼을 시각적으로 표시 */
+  `}
 
   @media (max-width: 780px) {
     width: 30px;
