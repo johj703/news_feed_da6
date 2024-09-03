@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { BackButton, ErrorBox, FormContainer, HeaderContainer, InputContainer, SigninButton } from './SignupInputStyle';
 import { supabase } from '../../../supabase/supabase';
 import { useNavigate } from 'react-router-dom';
+import backBtn from '../../../assets/back-btn.png';
 import Swal from 'sweetalert2';
 
 const SignupInput = () => {
@@ -101,14 +102,14 @@ const SignupInput = () => {
   return (
     <FormContainer>
       <HeaderContainer>
-        <h1>회원 가입</h1>
         <BackButton
           onClick={() => {
             navigate('/login');
           }}
         >
-          {'<'}
+          <img src={backBtn} alt="뒤로 가기" />
         </BackButton>
+        <h1>회원 가입</h1>
       </HeaderContainer>
       <InputContainer onSubmit={handleSignup}>
         <div>
