@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@rollup/rollup-win32-x64-msvc": "^4.21.2",
     "@supabase/supabase-js": "^2.45.2",
     "@toast-ui/react-editor": "^3.2.3",
     "react": "^18.3.1",
