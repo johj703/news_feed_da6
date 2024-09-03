@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
 import TuiEditor from '../TuiEditor';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ButtonContainer, FormContainer, RegisterButton, TitleInput } from './FormStyle';
 import { supabase } from '../../../supabase/supabase';
 import getPost from '../../detail/components/getPost';
 import { UserContext } from '../../../context/UserConext';
 
 const Form = ({ isModify }) => {
+  const params = useParams();
   const [post, setPost] = useState({
     title: '',
     content: '',
@@ -24,7 +25,7 @@ const Form = ({ isModify }) => {
 
   const getPostData = async () => {
     if (isModify) {
-      const response = await getPost();
+      const response = await getPost(params.id);
       setPost({ ...response });
     }
   };

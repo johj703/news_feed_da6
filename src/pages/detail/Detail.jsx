@@ -9,15 +9,15 @@ import Comments from './components/comment/Comments';
 import { UserContext } from '../../context/UserConext';
 
 const Detail = () => {
-  const [test, setTest] = useState({});
+  const [contents, setContents] = useState({});
   const navigate = useNavigate();
   const location = useLocation();
   const params = useParams();
   const { user } = useContext(UserContext);
 
   const getPostData = async () => {
-    const response = await getPost();
-    setTest(response);
+    const response = await getPost(params.id);
+    setContents(response);
   };
 
   useEffect(() => {
@@ -41,16 +41,16 @@ const Detail = () => {
     <DetailContainer>
       <ViewContainer className="view-container">
         <TitleContainer>
-          <Title>{test.title}</Title>
+          <Title>{contents.title}</Title>
         </TitleContainer>
 
         <UserInfoContainer>
-          <span>{test.author_name}</span>
-          <span>{test.date}</span>
+          <span>{contents.author_name}</span>
+          <span>{contents.date}</span>
         </UserInfoContainer>
 
-        {test.content && <Viewer className="viewer" initialValue={test.content} />}
-        {user?.email === test.email && (
+        {contents.content && <Viewer className="viewer" initialValue={contents.content} />}
+        {user?.email === contents.email && (
           <ButtonContainer>
             <ModifyButton onClick={() => handleModifyButton()} bgcolor="modify">
               수정
