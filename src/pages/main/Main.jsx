@@ -37,8 +37,27 @@ const Main = () => {
   // 현재 페이지에 표시할 게시물 배열
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
+  // 총 페이지 그룹 수 계산
+  const totalPageGroups = Math.ceil(totalPages / pageGroupSize);
+
   // 페이지 변경 하는 함수(페이지 번호 클릭하면 해당 페이지로 이동)
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  // 이전 페이지 그룹으로 이동
+  const handlePrevGroup = () => {
+    if (currentPageGroup > 0) {
+      setCurrentPageGroup(currentPageGroup - 1);
+      setCurrentPage(currentPageGroup * pageGroupSize);
+    }
+  };
+
+  // 다음 페이지 그룹으로 이동
+  const handleNextGroup = () => {
+    if (currentPageGroup < totalPageGroups - 1) {
+      setCurrentPageGroup(currentPageGroup + 1);
+      setCurrentPage((currentPageGroup + 1) * pageGroupSize + 1);
+    }
+  };
 
   const navigate = useNavigate();
 
@@ -103,6 +122,9 @@ const Main = () => {
       {/* 게시물이 10개 이상일 때 페이지네이션을 렌더링 */}
       {posts.length > 10 && (
         <PaginationContainer>
+          <PageButton onClick={handlePrevGroup} disabled={currentPageGroup === 0}>
+            &lt; {/* 왼쪽 화살표 */}
+          </PageButton>
           {[...Array(totalPages)].map((_, index) => (
             <PageButton
               key={index + 1}
@@ -112,6 +134,9 @@ const Main = () => {
               {index + 1} {/* 페이지 번호 */}
             </PageButton>
           ))}
+          <PageButton onClick={handleNextGroup} disabled={currentPageGroup >= totalPageGroups - 1}>
+            &gt; {/* 오른쪽 화살표 */}
+          </PageButton>
         </PaginationContainer>
       )}
     </BoardContainer>
