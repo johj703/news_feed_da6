@@ -6,18 +6,18 @@ export const FormContainer = styled.form`
 export const RegisterButton = styled.button`
   margin-top: 10px;
   float: right;
-  width: 70px;
-  height: 30px;
+  width: 170px;
+  height: 50px;
   border: none;
   border-radius: 8px;
-  background-color: ${(props) => (props.bgcolor === 'modify' ? '#407221' : '#36474F')};
+  background-color: ${(props) => (props.bgcolor === 'modify' ? '#36474F' : '#407221')};
   color: white;
   cursor: pointer;
 `;
 
 export const TitleInput = styled.input`
   width: 100%;
-  height: 30px;
+  height: 65px;
   margin: 10px 0;
   border: 1px solid #dadde6;
   border-radius: 4px;
