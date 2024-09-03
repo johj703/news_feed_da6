@@ -3,9 +3,10 @@ import { UserContext } from '../../context/UserConext';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-const PrivateRoute = (page) => {
+const PrivateRoute = ({ page }) => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
+  console.log(user);
 
   if (user) {
     return page;
