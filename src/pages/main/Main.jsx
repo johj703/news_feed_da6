@@ -45,17 +45,15 @@ const Main = () => {
 
   // 이전 페이지 그룹으로 이동
   const handlePrevGroup = () => {
-    if (currentPageGroup > 0) {
-      setCurrentPageGroup(currentPageGroup - 1);
-      setCurrentPage(currentPageGroup * pageGroupSize);
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
     }
   };
 
   // 다음 페이지 그룹으로 이동
   const handleNextGroup = () => {
-    if (currentPageGroup < totalPageGroups - 1) {
-      setCurrentPageGroup(currentPageGroup + 1);
-      setCurrentPage((currentPageGroup + 1) * pageGroupSize + 1);
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
     }
   };
 
@@ -122,7 +120,7 @@ const Main = () => {
       {/* 게시물이 10개 이상일 때 페이지네이션을 렌더링 */}
       {posts.length > 10 && (
         <PaginationContainer>
-          <PageButton onClick={handlePrevGroup} disabled={currentPageGroup === 0}>
+          <PageButton onClick={handlePrevGroup} disabled={currentPageGroup === 1}>
             &lt; {/* 왼쪽 화살표 */}
           </PageButton>
           {[...Array(totalPages)].map((_, index) => (
@@ -134,7 +132,7 @@ const Main = () => {
               {index + 1} {/* 페이지 번호 */}
             </PageButton>
           ))}
-          <PageButton onClick={handleNextGroup} disabled={currentPageGroup >= totalPageGroups - 1}>
+          <PageButton onClick={handleNextGroup} disabled={currentPage === totalPages}>
             &gt; {/* 오른쪽 화살표 */}
           </PageButton>
         </PaginationContainer>
