@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { BackButton, ErrorBox, FormContainer, HeaderContainer, InputContainer, SigninButton } from './SignupInputStyle';
 import { supabase } from '../../../supabase/supabase';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const SignupInput = () => {
   const navigate = useNavigate();
@@ -69,7 +70,7 @@ const SignupInput = () => {
       return;
     }
 
-    let { data, error } = await supabase.auth.signUp({
+    let { error } = await supabase.auth.signUp({
       email: formState.email,
       password: formState.password,
       options: {
@@ -81,11 +82,19 @@ const SignupInput = () => {
     });
     if (error) {
       if (error.message === 'User already registered') {
-        alert('이미 존재하는 아이디입니다. 다른 아이디를 사용해주세요!');
+        Swal.fire({
+          text: '이미 존재하는 이메일입니다!',
+          icon: 'error',
+          confirmButtonText: '확인'
+        });
         return;
       }
     } else {
-      console.log('성공!=>', data);
+      Swal.fire({
+        text: '회원가입 완료!',
+        icon: 'success',
+        confirmButtonText: '확인'
+      });
       navigate('/login');
     }
   };

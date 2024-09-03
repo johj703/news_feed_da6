@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { supabase } from '../../../supabase/supabase';
 import { InputContainer } from './LoginInputStyle';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const LoginInput = () => {
   const navigate = useNavigate();
@@ -12,14 +13,17 @@ const LoginInput = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password
     });
     if (error) {
-      alert('아이디, 비밀번호를 확인해주세요!');
+      Swal.fire({
+        text: '아이디, 비밀번호를 확인해주세요!',
+        icon: 'error',
+        confirmButtonText: '확인'
+      });
     } else {
-      console.log('로그인 성공! =>', data);
       navigate('/');
     }
   };
