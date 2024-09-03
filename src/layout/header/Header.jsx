@@ -20,7 +20,7 @@ const Header = () => {
         <img src={logo} alt="로고" />
       </Link>
 
-      <MemberLink>{userData ? <WhenLogin /> : <WhenLogout />}</MemberLink>
+      <MemberLink>{userData?.id ? <WhenLogin /> : <WhenLogout />}</MemberLink>
     </HeaderInner>
   );
 };
