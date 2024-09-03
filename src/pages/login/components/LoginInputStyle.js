@@ -93,3 +93,15 @@ export const JoinButton = styled.button`
     font-size: 16px;
   }
 `;
+
+export const GithubButton = styled.button`
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+
+  img {
+    display: block;
+    width: 50px;
+  }
+`;

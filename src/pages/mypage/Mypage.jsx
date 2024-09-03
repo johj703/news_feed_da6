@@ -12,7 +12,7 @@ const Mypage = () => {
 
   const getUserData = JSON.parse(localStorage.getItem('userData'));
   const userInfo = getUserData?.user_metadata;
-  const randomVersionProfile = userInfo?.profile_url; // 프로필 이미지 캐시이슈로 버전 랜덤으로 추가
+  const randomVersionProfile = userInfo?.profile_url ?? userInfo?.avatar_url; // 프로필 이미지 캐시이슈로 버전 랜덤으로 추가
 
   useEffect(() => {
     if (!getUserData) {
