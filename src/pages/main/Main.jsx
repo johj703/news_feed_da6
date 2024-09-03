@@ -42,7 +42,6 @@ const Main = () => {
   // 페이지 변경 하는 함수(페이지 번호 클릭하면 해당 페이지로 이동)
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  // useNavigate 함수를 navigate 변수에 담기
   const navigate = useNavigate();
 
   // navigate를 사용해서 toWrite를 사용해서 write 페이지로 이동하도록 작성
@@ -61,7 +60,6 @@ const Main = () => {
   }, []);
 
   // Supabase에서 Data를 읽어오는 API 함수 가지고 오기
-
   const readData = async () => {
     setLoading(true); /* 데이터를 불러올 때 로딩 상태로 전환 */
     const { data: post, error } = await supabase.from('post').select('*');
