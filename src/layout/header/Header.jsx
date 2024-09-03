@@ -8,9 +8,15 @@ import { supabase } from '../../supabase/supabase';
 const Header = () => {
   const userData = useContext(UserContext).user;
 
+  const handleClickLogo = () => {
+    sessionStorage.removeItem('mainPage');
+    sessionStorage.removeItem('myBoard');
+    sessionStorage.removeItem('bookMark');
+  };
+
   return (
     <HeaderInner>
-      <Link to="/" onClick={() => sessionStorage.clear()}>
+      <Link to="/" onClick={() => handleClickLogo()}>
         <img src={logo} alt="로고" />
       </Link>
 
@@ -26,6 +32,8 @@ const WhenLogin = () => {
   const handleLogOut = async (e) => {
     e.preventDefault();
     const { error } = await supabase.auth.signOut();
+
+    sessionStorage.removeItem('isLogin');
     navigate('/', { replace: true });
   };
 

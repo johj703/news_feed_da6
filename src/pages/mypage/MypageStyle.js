@@ -223,3 +223,11 @@ export const Paging = styled.div`
     }
   }
 `;
+
+export const BlankBoard = styled.div`
+  width: 100%;
+  text-align: center;
+  padding: 60px 0;
+  font-size: 18px;
+  font-weight: 500;
+`;

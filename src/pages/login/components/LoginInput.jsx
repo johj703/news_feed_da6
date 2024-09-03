@@ -35,6 +35,7 @@ const LoginInput = () => {
         confirmButtonText: '확인'
       });
     } else {
+      sessionStorage.setItem('isLogin', true);
       navigate('/');
     }
   };
@@ -55,6 +56,7 @@ const LoginInput = () => {
         confirmButtonText: '확인'
       });
     } else {
+      sessionStorage.setItem('isLogin', true);
       navigate('/');
     }
   };

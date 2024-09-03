@@ -171,7 +171,7 @@ const Mymodify = () => {
         <ProfileImageWrap>
           <ProfileImage>
             {imageLoading ? <LoadingImage /> : undefined}
-            <img src={userInfo.profile_url} alt="" />
+            <img src={userInfo.profile_url ?? userInfo.avatar_url} alt="" />
           </ProfileImage>
 
           <ImageButtonArea>
@@ -185,7 +185,12 @@ const Mymodify = () => {
           <InnerBox>
             <InputWrapper>
               <label htmlFor="display_name">닉네임</label>
-              <Input id="display_name" type="text" onChange={infoChange} value={userInfo.display_name || ''} />
+              <Input
+                id="display_name"
+                type="text"
+                onChange={infoChange}
+                value={userInfo?.display_name ?? userInfo?.user_name}
+              />
             </InputWrapper>
 
             <InputWrapper>

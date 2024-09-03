@@ -40,7 +40,7 @@ const Mypage = () => {
         </ProfileImg>
 
         <MemberInfo>
-          <h4 className="name">{userInfo?.display_name}</h4>
+          <h4 className="name">{userInfo?.display_name ?? userInfo?.user_name}</h4>
           <span className="email">email : {userInfo?.email}</span>
         </MemberInfo>
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../../../supabase/supabase';
 import { Link, useSearchParams } from 'react-router-dom';
-import { MyArticle, MyBoardList, Paging } from '../MypageStyle';
+import { BlankBoard, MyArticle, MyBoardList, Paging } from '../MypageStyle';
 
 import prev from '../../../assets/prev.png';
 import next from '../../../assets/next.png';
