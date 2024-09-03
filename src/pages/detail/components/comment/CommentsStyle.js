@@ -5,10 +5,13 @@ export const CommentsContainer = styled.ul`
   padding: 0;
 `;
 
-export const CommentsItemBox = styled.li`
+export const CommentsListContainer = styled.div`
+  border-bottom: 3px solid #36474f;
   padding: 10px 24px;
   min-height: 100px;
-  border-bottom: 3px solid #36474f;
+`;
+
+export const CommentsItemBox = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -21,6 +24,15 @@ export const CommentTitle = styled.h2`
 
 export const CommentProfile = styled.div`
   width: 100px;
+  height: 100px;
+  border-radius: 70%;
+  overflow: hidden;
+`;
+
+export const CommentProfileImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
 
 export const CommentBox = styled.div`
@@ -37,13 +49,14 @@ export const CommentInfo = styled.span`
 
 export const CommentInputForm = styled.form`
   width: 100%;
+  margin-top: ${(props) => (props.isUpdate ? '20px' : '')};
   position: relative;
   display: inline-block;
 `;
 
 export const CommentInput = styled.input`
   width: 100%;
-  height: 100px;
+  height: ${(props) => (props.isUpdate ? '70px' : '100px')};
   padding-left: 20px;
   padding-right: 180px;
   box-sizing: border-box;
@@ -59,8 +72,8 @@ export const CommentInputButton = styled.button`
   right: 30px;
   top: 50%;
   transform: translateY(-50%);
-  width: 120px;
-  height: 80px;
+  width: ${(props) => (props.isUpdate ? '110px' : '120px')};
+  height: ${(props) => (props.isUpdate ? '50px' : '80px')};
   border: none;
   color: white;
   border-radius: 8px;
