@@ -23,7 +23,6 @@ const Main = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentPageGroup, setCurrentPageGroup] = useState(0);
 
   // 페이지 하나당 포스트의 개수는 10개인 상수 생성, 한 번에 보여줄 페이지 버튼 상수 생성
   const postsPerPage = 10;
