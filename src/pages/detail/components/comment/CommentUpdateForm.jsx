@@ -21,8 +21,8 @@ const CommentUpdateForm = ({ setIsUpdate, comment, $isUpdate }) => {
       .update([
         {
           content: updateComment,
-          comment_author_name: user.user_metadata.display_name,
-          comment_author_profile_url: user.user_metadata.profile_url
+          comment_author_name: user.user_metadata.display_name ?? user.user_metadata.user_name,
+          comment_author_profile_url: user.user_metadata.profile_url ?? user.user_metadata.avatar_url
         }
       ])
       .eq('uuid', comment.uuid)

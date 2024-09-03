@@ -1,12 +1,9 @@
-import { useContext } from 'react';
-import { UserContext } from '../../context/UserConext';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 const PrivateRoute = ({ page }) => {
-  const { user } = useContext(UserContext);
+  const user = sessionStorage.getItem('isLogin');
   const navigate = useNavigate();
-  console.log(user);
 
   if (user) {
     return page;
