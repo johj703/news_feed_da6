@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 const PrivateRoute = (page) => {
   const { user } = useContext(UserContext);
-  const navigete = useNavigate();
+  const navigate = useNavigate();
 
   if (user) {
     return page;
@@ -16,7 +16,7 @@ const PrivateRoute = (page) => {
       confirmButtonText: '확인'
     }).then(() => {
       // then을 이용해 alert 확인 버튼 클릭 후 로그인 페이지 이동하도록 구현
-      navigete('/login');
+      navigate('/login');
     });
   }
 
