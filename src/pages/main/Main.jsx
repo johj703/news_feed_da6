@@ -19,25 +19,29 @@ import { supabase } from './../../supabase/supabase';
 import noImage from '../../assets/no-image.png';
 
 const Main = () => {
+  // 게시물 데이터, 로딩 상태, 페이지 번호, 현재 페이지 그룹 번호 state 관리
   const [posts, setPosts] = useState([]);
-  // 로딩 데이터 상태 관리
   const [loading, setLoading] = useState(true);
-  // 현재 페이지 상태 관리
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentPageGroup, setCurrentPageGroup] = useState(0);
 
-  // 페이지 하나당 포스트의 개수는 10개인 상수 생성
+  // 페이지 하나당 포스트의 개수는 10개인 상수 생성, 한 번에 보여줄 페이지 버튼 상수 생성
   const postsPerPage = 10;
+  const pagesPerGroup = 10;
 
   // 총 페이지 수 계산
   const totalPages = Math.ceil(posts.length / postsPerPage);
 
   // 현재 페이지에 해당하는 게시물 계산
-  // 1. 현재 페이지의 마지막 게시물 인덱스
   const indexOfLastPost = currentPage * postsPerPage;
-  // 2. 현재 페이지의 첫 번째 게시물 인덱스
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  // 3. 현재 페이지에 표시할 게시물 배열
+  // 현재 페이지에 표시할 게시물 배열
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+  // 현재 페이지 그룹 계산
+  const currentGroup = Math.floor((currentPage - 1) / pagesPerGroup);
+  const startPage = currentGroup * pagesPerGroup + 1;
+  const endPage = Math.min(startPage + pagesPerGroup - 1, totalPages);
 
   // 페이지 변경 하는 함수(페이지 번호 클릭하면 해당 페이지로 이동)
   const paginate = (pageNumber) => {
@@ -45,10 +49,23 @@ const Main = () => {
     setCurrentPage(pageNumber);
   };
 
-  // useNavigate 함수를 navigate 변수에 담기
+  // 이전 페이지 그룹으로 이동
+  const handlePrevGroup = () => {
+    if (currentGroup > 0) {
+      setCurrentPage(startPage - 1);
+    }
+  };
+
+  // 다음 페이지 그룹으로 이동
+  const handleNextGroup = () => {
+    if (endPage < totalPages) {
+      setCurrentPage(endPage + 1);
+    }
+  };
+
   const navigate = useNavigate();
 
-  // navigate를 사용해서 toWrite를 사용해서 write 페이지로 이동하도록 작성
+  // navigate를 사용해서 write 페이지로 이동하도록 작성
   const toWrite = () => {
     navigate('/write');
   };
@@ -70,7 +87,6 @@ const Main = () => {
   }, []);
 
   // Supabase에서 Data를 읽어오는 API 함수 가지고 오기
-
   const readData = async () => {
     setLoading(true); /* 데이터를 불러올 때 로딩 상태로 전환 */
     const { data: post, error } = await supabase.from('post').select('*').order('created_at', { ascending: false });
@@ -126,18 +142,26 @@ const Main = () => {
         <Button onClick={toWrite}>글쓰기</Button>
       </ButtonContainer>
       {/* 게시물이 10개 이상일 때 페이지네이션을 렌더링 */}
-      {posts.length > 1 && (
+      {posts.length > postsPerPage && (
         <PaginationContainer>
-          {[...Array(totalPages)].map((_, index) => (
-            <PageButton
-              className={index}
-              key={index + 1}
-              onClick={() => paginate(index + 1)} /* 클릭 하면 해당 페이지로 이동 */
-              $isActive={currentPage === index + 1} /* 현재 페이지는 활성화 상태로 표시 */
-            >
-              {index + 1} {/* 페이지 번호 */}
-            </PageButton>
-          ))}
+          <PageButton onClick={handlePrevGroup} disabled={currentGroup === 0}>
+            &lt; {/* 왼쪽 화살표 */}
+          </PageButton>
+          {[...Array(endPage - startPage + 1)].map((_, index) => {
+            const pageNumber = startPage + index;
+            return (
+              <PageButton
+                key={pageNumber}
+                onClick={() => paginate(pageNumber)} /* 클릭 하면 해당 페이지로 이동 */
+                $isActive={currentPage === pageNumber} /* 현재 페이지는 활성화 상태로 표시 */
+              >
+                {pageNumber} {/* 페이지 번호 */}
+              </PageButton>
+            );
+          })}
+          <PageButton onClick={handleNextGroup} disabled={endPage === totalPages}>
+            &gt; {/* 오른쪽 화살표 */}
+          </PageButton>
         </PaginationContainer>
       )}
     </BoardContainer>
