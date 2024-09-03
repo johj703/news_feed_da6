@@ -40,7 +40,12 @@ const LoginInput = () => {
   // Github 로그인
   const handleGithubLogin = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'github'
+      provider: 'github',
+      options: {
+        data: {
+          profile_url: supabase.storage.from('profileImage').getPublicUrl('defaultImage/defaultImage').data.publicUrl
+        }
+      }
     });
     if (error) {
       Swal.fire({

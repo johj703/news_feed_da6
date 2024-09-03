@@ -76,6 +76,7 @@ const SignupInput = () => {
       password: formState.password,
       options: {
         data: {
+          user_name: formState.name,
           display_name: formState.name,
           profile_url: supabase.storage.from('profileImage').getPublicUrl('defaultImage/defaultImage').data.publicUrl
         }
