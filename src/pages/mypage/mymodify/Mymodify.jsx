@@ -46,6 +46,14 @@ const Mymodify = () => {
       ...userInfo,
       [id]: value
     });
+  };
+
+  const passwordChange = (e) => {
+    const { id, value } = e.target;
+    setUserInfo({
+      ...userInfo,
+      [id]: value
+    });
 
     // 비밀번호 유효성검사
     if (!passwordRules(passwordRef.current.value)) {
@@ -176,8 +184,8 @@ const Mymodify = () => {
         <Box>
           <InnerBox>
             <InputWrapper>
-              <label htmlFor="user_name">닉네임</label>
-              <Input id="user_name" type="text" onChange={infoChange} value={userInfo.display_name || ''} />
+              <label htmlFor="display_name">닉네임</label>
+              <Input id="display_name" type="text" onChange={infoChange} value={userInfo.display_name || ''} />
             </InputWrapper>
 
             <InputWrapper>
@@ -195,13 +203,19 @@ const Mymodify = () => {
 
             <InputWrapper>
               <label htmlFor="passWord">비밀번호</label>
-              <Input id="passWord" ref={passwordRef} onChange={infoChange} type="password" autoComplete="off" />
+              <Input id="passWord" ref={passwordRef} onChange={passwordChange} type="password" autoComplete="off" />
               {passwordChk && <PasswordChk>{passwordChk}</PasswordChk>}
             </InputWrapper>
 
             <InputWrapper>
               <label htmlFor="passwordChk">비밀번호 확인</label>
-              <Input id="passwordChk" ref={passwordChkRef} onChange={infoChange} type="password" autoComplete="off" />
+              <Input
+                id="passwordChk"
+                ref={passwordChkRef}
+                onChange={passwordChange}
+                type="password"
+                autoComplete="off"
+              />
             </InputWrapper>
           </InnerBox>
 
