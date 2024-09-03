@@ -1,65 +1,74 @@
-import { useState } from 'react';
+import { memo, useCallback, useContext, useState } from 'react';
 import {
   CommentBox,
   CommentInfo,
   CommentLastInfoBox,
   CommentModifyButton,
   CommentProfile,
-  CommentsItemBox
+  CommentProfileImg,
+  CommentsItemBox,
+  CommentsListContainer
 } from './CommentsStyle';
 import CommentUpdateForm from './CommentUpdateForm';
+import { supabase } from '../../../../supabase/supabase';
+import { useParams } from 'react-router-dom';
+import { UserContext } from '../../../../context/UserConext';
+import { useComments } from '../../hooks/useComments';
 
 const CommentItem = ({ data }) => {
-  console.log(data);
   const [isUpdate, setIsUpdate] = useState(false);
+  const { user } = useContext(UserContext);
+  const params = useParams();
+  const { getComments } = useComments();
+
   /**댓글 생성 시간 바꿔주는 함수 */
-  const commentCreationTimeConverter = (time) => {
+  const commentCreationTimeConverter = useCallback((time) => {
     return new Date(time).toLocaleString();
-  };
-  const handleUpdateComment = async () => {
-    setIsUpdate(true);
-    // const { error } = await supabase
-    //   .from('comment')
-    //   .update([
-    //     {
-    //       post_id: params.id,
-    //       content: commentInput,
-    //       comment_author_name: testUser.name,
-    //       comment_author_profile_url: testUser.profile_url
-    //     }
-    //   ])
-    //   .eq('comments_id', id)
-    //   .select();
-    // if (error) {
-    //   console.error(error);
-    //   return;
-    // }
-  };
+  }, []);
 
-  const handleDeleteComment = async (id) => {
-    console.log(id);
-  };
+  const handleUpdateComment = useCallback(async () => {
+    setIsUpdate((prev) => !prev);
+  }, []);
+
+  const handleDeleteComment = useCallback(
+    async (id) => {
+      const { error } = await supabase.from('comment').delete().eq('uuid', id);
+      if (error) {
+        console.error(error);
+      }
+      getComments(params.id);
+    },
+    [getComments, params.id]
+  );
+
   return (
-    <CommentsItemBox>
-      <CommentProfile>여긴 프로필 이미지</CommentProfile>
-      <CommentBox>
-        <span>{data.content}</span>
-        <CommentLastInfoBox>
-          <div>
-            <CommentInfo>{data.comment_author_name}</CommentInfo>
-            <CommentInfo>{commentCreationTimeConverter(data.created_at)}</CommentInfo>
-          </div>
-
-          <div>
-            <CommentModifyButton onClick={() => handleUpdateComment(data.comments_id)}>수정</CommentModifyButton>
-            <span>|</span>
-            <CommentModifyButton onClick={() => handleDeleteComment(data.comments_id)}>삭제</CommentModifyButton>
-          </div>
-        </CommentLastInfoBox>
-      </CommentBox>
-      {isUpdate && <CommentUpdateForm setIsUpdate={setIsUpdate} />}
-    </CommentsItemBox>
+    <CommentsListContainer>
+      <CommentsItemBox>
+        <CommentProfile>
+          <CommentProfileImg src={data.comment_author_profile_url} />
+        </CommentProfile>
+        <CommentBox>
+          <span>{data.content}</span>
+          <CommentLastInfoBox>
+            <div>
+              <CommentInfo>{data.comment_author_name}</CommentInfo>
+              <CommentInfo>{commentCreationTimeConverter(data.created_at)}</CommentInfo>
+            </div>
+            {data.comment_author_email === user.email ? (
+              <div>
+                <CommentModifyButton onClick={() => handleUpdateComment()}>
+                  {isUpdate ? '취소' : '수정'}
+                </CommentModifyButton>
+                <span>|</span>
+                <CommentModifyButton onClick={() => handleDeleteComment(data.uuid)}>삭제</CommentModifyButton>
+              </div>
+            ) : null}
+          </CommentLastInfoBox>
+        </CommentBox>
+      </CommentsItemBox>
+      {isUpdate && <CommentUpdateForm setIsUpdate={setIsUpdate} comment={data} isUpdate={isUpdate} />}
+    </CommentsListContainer>
   );
 };
 
-export default CommentItem;
+export default memo(CommentItem);
