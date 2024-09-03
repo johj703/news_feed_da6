@@ -1,11 +1,12 @@
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/toastui-editor.css';
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { supabase } from '../../supabase/supabase';
+import { UserContext } from '../../context/UserConext';
 
 const toolbar = [['heading', 'bold', 'italic', 'strike'], ['hr', 'quote', 'ul', 'ol'], ['image']];
-const email = 'cj8928@gmail.com';
 const TuiEditor = ({ setPost, post }) => {
+  const { user } = useContext(UserContext);
   const editorRef = useRef();
   useEffect(() => {
     if (editorRef.current) {
@@ -21,7 +22,7 @@ const TuiEditor = ({ setPost, post }) => {
   };
 
   const handleImage = async (file, callback) => {
-    const { data, error } = await supabase.storage.from('post').upload(`${email}/${Date.now()}`, file);
+    const { data, error } = await supabase.storage.from('post').upload(`${user.email}/${Date.now()}`, file);
     callback(`https://kunfsmlsnsixsdzskbmx.supabase.co/storage/v1/object/public/${data.fullPath}`);
     if (error) {
       return;
