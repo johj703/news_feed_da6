@@ -26,7 +26,7 @@ const Main = () => {
 
   // 페이지 하나당 포스트의 개수는 10개인 상수 생성, 한 번에 보여줄 페이지 버튼 상수 생성
   const postsPerPage = 1;
-  const pageGroupSize = 10;
+  const pagesPerGroup = 10;
 
   // 총 페이지 수 계산
   const totalPages = Math.ceil(posts.length / postsPerPage);
@@ -37,23 +37,25 @@ const Main = () => {
   // 현재 페이지에 표시할 게시물 배열
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
-  // 총 페이지 그룹 수 계산
-  const totalPageGroups = Math.ceil(totalPages / pageGroupSize);
+  // 현재 페이지 그룹 계산
+  const currentGroup = Math.floor((currentPage - 1) / pagesPerGroup);
+  const startPage = currentGroup * pagesPerGroup + 1;
+  const endPage = Math.min(startPage + pagesPerGroup - 1, totalPages);
 
   // 페이지 변경 하는 함수(페이지 번호 클릭하면 해당 페이지로 이동)
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   // 이전 페이지 그룹으로 이동
   const handlePrevGroup = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+    if (currentGroup > 0) {
+      setCurrentPage(startPage - 1);
     }
   };
 
   // 다음 페이지 그룹으로 이동
   const handleNextGroup = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
+    if (endPage < totalPages) {
+      setCurrentPage(endPage + 1);
     }
   };
 
