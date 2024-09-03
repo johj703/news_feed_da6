@@ -13,6 +13,7 @@ import {
 } from './LoginInputStyle';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import GitImg from '../../../assets/github-mark.png';
 
 const LoginInput = () => {
   const navigate = useNavigate();
@@ -98,7 +99,7 @@ const LoginInput = () => {
 
       <JoinGuide>SNS 로그인</JoinGuide>
       <GithubButton onClick={handleGithubLogin}>
-        <img src="/src/assets/github-mark.png" />
+        <img src={GitImg} />
       </GithubButton>
     </InputContainer>
   );
