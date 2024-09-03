@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import TuiEditor from '../TuiEditor';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ButtonContainer, FormContainer, RegisterButton, TitleInput } from './FormStyle';
 import { supabase } from '../../../supabase/supabase';
-import getPost from '../../detail/hooks/getPost';
+import getPost from '../../detail/components/getPost';
+import { UserContext } from '../../../context/UserConext';
 
 const Form = ({ isModify }) => {
+  const params = useParams();
   const [post, setPost] = useState({
     title: '',
     content: '',
@@ -15,37 +17,49 @@ const Form = ({ isModify }) => {
     email: '',
     uuid: ''
   });
+  const { user } = useContext(UserContext);
+
   const today = new Date().toLocaleString();
 
   const navigate = useNavigate();
 
   const getPostData = async () => {
     if (isModify) {
-      const response = await getPost();
+      const response = await getPost(params.id);
       setPost({ ...response });
     }
   };
-  useEffect(() => {
-    getPostData();
-    const userInfo = async () => {
-      const {
-        data: { user }
-      } = await supabase.auth.getUser();
-      console.log(user);
-    };
-    userInfo();
-  }, []);
+
+  const findThumbnailImage = () => {
+    const regex = /!\[[^\]]*\]\(([^)]+)\)/;
+    const match = regex.exec(post.content);
+    if (match) {
+      const firstMatch = match[1];
+      return firstMatch;
+    }
+    return null;
+  };
+
   const handleModifySubmit = async () => {
+    if (post.title.length === 0) {
+      alert('제목을 입력해주세요.');
+      return;
+    }
+    if (post.content.length === 0) {
+      alert('내용을 입력해주세요.');
+      return;
+    }
     const { error } = await supabase
       .from('post')
       .update([
         {
-          author_name: '이기성',
-          author_profile_url: '',
+          author_name: user.user_metadata.display_name,
+          author_profile_url: user.user_metadata.profile_url,
           date: today,
           title: post.title,
           content: post.content,
-          email: 'cj8928@gmail.com'
+          email: user.email,
+          thumbnail_url: findThumbnailImage()
         }
       ])
       .eq('uuid', post.uuid)
@@ -58,16 +72,25 @@ const Form = ({ isModify }) => {
   };
 
   const handleWriteSubmit = async () => {
+    if (post.title.length === 0) {
+      alert('제목을 입력해주세요.');
+      return;
+    }
+    if (post.content.length === 0) {
+      alert('내용을 입력해주세요.');
+      return;
+    }
     const { error } = await supabase
       .from('post')
       .insert([
         {
-          author_name: '이기성',
-          author_profile_url: '',
+          author_name: user.user_metadata.display_name,
+          author_profile_url: user.user_metadata.profile_url,
           date: today,
           title: post.title,
           content: post.content,
-          email: 'cj8928@gmail.com'
+          email: user.email,
+          thumbnail_url: findThumbnailImage()
         }
       ])
       .select();
@@ -84,6 +107,10 @@ const Form = ({ isModify }) => {
     navigate(-1);
   };
 
+  useEffect(() => {
+    getPostData();
+  }, []);
+
   return (
     <FormContainer
       onSubmit={(e) => {
@@ -97,13 +124,15 @@ const Form = ({ isModify }) => {
 
       {isModify ? (
         <ButtonContainer>
-          <RegisterButton type="submit">수정</RegisterButton>
+          <RegisterButton type="submit" bgcolor="modify">
+            수정 완료
+          </RegisterButton>
           <RegisterButton type="button" onClick={handleCancelButton}>
             취소
           </RegisterButton>
         </ButtonContainer>
       ) : (
-        <RegisterButton type="submit">등록</RegisterButton>
+        <RegisterButton type="submit">작성 완료</RegisterButton>
       )}
     </FormContainer>
   );
