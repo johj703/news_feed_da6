@@ -21,15 +21,8 @@ const CommentItem = ({ data }) => {
   const params = useParams();
   const { getComments } = useComments();
 
-  const todayDate = new Date().getFullYear() + new Date().getMonth() + new Date().getDay();
-
   /**댓글 생성 시간 바꿔주는 함수 */
   const commentCreationTimeConverter = useCallback((time) => {
-    // const itemDate = new Date(time).getFullYear() + new Date(time).getMonth() + new Date(time).getDay();
-    // if (todayDate === itemDate) {
-    //   return '오' + new Date(time).toLocaleString().split(' 오')[1];
-    // }
-    // return new Date(time).toLocaleString().split(' 오')[0];
     return new Date(time).toLocaleString();
   }, []);
 
