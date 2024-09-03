@@ -207,7 +207,7 @@ const Mymodify = () => {
             </InputWrapper>
 
             <InputWrapper>
-              <label htmlFor="passWord">비밀번호</label>
+              <label htmlFor="passWord">비밀번호 변경</label>
               <Input id="passWord" ref={passwordRef} onChange={passwordChange} type="password" autoComplete="off" />
               {passwordChk && <PasswordChk>{passwordChk}</PasswordChk>}
             </InputWrapper>
