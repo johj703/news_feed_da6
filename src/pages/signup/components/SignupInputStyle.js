@@ -1,77 +1,82 @@
 import styled from 'styled-components';
 
 export const FormContainer = styled.div`
-  padding-right: 500px;
-  padding-top: 400px;
+  max-width: 600px; /* 너비를 600px로 확장 */
+  margin-top: 500px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+`;
+
+export const HeaderContainer = styled.div`
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 20px;
 
   h1 {
-    margin-bottom: 70px;
+    font-size: 24px;
+    color: #608a46;
   }
-  img {
-    position: absolute;
-    left: 1200px;
-    top: 350px;
+`;
+
+export const BackButton = styled.button`
+  font-size: 20px;
+  color: #608a46;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    color: #1a7f00;
   }
 `;
 
 export const InputContainer = styled.form`
   display: flex;
   flex-direction: column;
-
-  div {
-    display: flex;
-
-    span {
-      font-size: 24px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 200px;
-    }
+  gap: 15px;
+  width: 100%;
+  span {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #333;
   }
 
   input {
-    font-size: 26px;
-    width: 400px;
-    border: 1px solid #b4b4b4;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
     border-radius: 5px;
-    margin-bottom: 5px;
+    font-size: 14px;
+
+    &:focus {
+      border-color: #2db400;
+    }
   }
 `;
 
 export const ErrorBox = styled.div`
   color: red;
   font-size: 12px;
-  justify-content: center;
+  height: 15px;
+  margin-top: -10px;
+  margin-bottom: 10px;
 `;
 
 export const SigninButton = styled.button`
-  font-size: 20px;
-  border: none;
-  border-radius: 25px;
-  background-color: #407221;
+  width: 100%;
+  padding: 15px;
+  background-color: #608a46;
   color: white;
-  padding: 10px;
-  width: 95%;
-  margin-left: 25px;
-  cursor: pointer;
-`;
-
-export const BackButton = styled.button`
-  font-size: 50px;
-  font-weight: bold;
-  background-color: white;
+  font-size: 16px;
   border: none;
-  margin-left: -350px;
-  margin-bottom: 50px;
+  border-radius: 5px;
   cursor: pointer;
-`;
+  margin-top: 10px;
 
-export const HeaderContainer = styled.div`
-  display: flex;
-  margin-right: 80px;
+  &:hover {
+    background-color: #608a46;
+  }
 `;

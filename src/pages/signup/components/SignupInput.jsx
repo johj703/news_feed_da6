@@ -127,11 +127,12 @@ const SignupInput = () => {
         <div>
           <span>비밀번호 확인</span>
           <input type="password" value={formState.verifyPssword} autoComplete="off" onChange={VerifyPasswordCheck} />
-          <p>{formState.verifyPsswordError}</p>
+          <ErrorBox>
+            <p>{formState.verifyPsswordError}</p>
+          </ErrorBox>
         </div>
         <SigninButton type="submit">회원가입</SigninButton>
       </InputContainer>
-      <img src="../../../../public/1.png" alt="" />
     </FormContainer>
   );
 };
