@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { supabase } from '../../../supabase/supabase';
 import {
+  GithubButton,
   InputContainer,
   Title,
   LoginForm,
@@ -11,6 +12,7 @@ import {
   JoinGuide
 } from './LoginInputStyle';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const LoginInput = () => {
   const navigate = useNavigate();
@@ -21,13 +23,39 @@ const LoginInput = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password
     });
     if (error) {
-      alert('아이디, 비밀번호를 확인해주세요!');
+      Swal.fire({
+        text: '아이디, 비밀번호를 확인해주세요!',
+        icon: 'error',
+        confirmButtonText: '확인'
+      });
     } else {
+      sessionStorage.setItem('isLogin', true);
+      navigate('/');
+    }
+  };
+  // Github 로그인
+  const handleGithubLogin = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'github',
+      options: {
+        data: {
+          profile_url: supabase.storage.from('profileImage').getPublicUrl('defaultImage/defaultImage').data.publicUrl
+        }
+      }
+    });
+    if (error) {
+      Swal.fire({
+        text: 'GitHub 로그인에 실패!',
+        icon: 'error',
+        confirmButtonText: '확인'
+      });
+    } else {
+      sessionStorage.setItem('isLogin', true);
       navigate('/');
     }
   };
@@ -71,6 +99,9 @@ const LoginInput = () => {
       </JoinButton>
 
       <JoinGuide>SNS 로그인</JoinGuide>
+      <GithubButton onClick={handleGithubLogin}>
+        <img src="/src/assets/github-mark.png" />
+      </GithubButton>
     </InputContainer>
   );
 };

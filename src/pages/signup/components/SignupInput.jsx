@@ -3,6 +3,7 @@ import { BackButton, ErrorBox, FormContainer, HeaderContainer, InputContainer, S
 import { supabase } from '../../../supabase/supabase';
 import { useNavigate } from 'react-router-dom';
 import backBtn from '../../../assets/back-btn.png';
+import Swal from 'sweetalert2';
 
 const SignupInput = () => {
   const navigate = useNavigate();
@@ -70,11 +71,12 @@ const SignupInput = () => {
       return;
     }
 
-    let { data, error } = await supabase.auth.signUp({
+    let { error } = await supabase.auth.signUp({
       email: formState.email,
       password: formState.password,
       options: {
         data: {
+          user_name: formState.name,
           display_name: formState.name,
           profile_url: supabase.storage.from('profileImage').getPublicUrl('defaultImage/defaultImage').data.publicUrl
         }
@@ -82,10 +84,19 @@ const SignupInput = () => {
     });
     if (error) {
       if (error.message === 'User already registered') {
-        alert('이미 존재하는 아이디입니다. 다른 아이디를 사용해주세요!');
+        Swal.fire({
+          text: '이미 존재하는 이메일입니다!',
+          icon: 'error',
+          confirmButtonText: '확인'
+        });
         return;
       }
     } else {
+      Swal.fire({
+        text: '회원가입 완료!',
+        icon: 'success',
+        confirmButtonText: '확인'
+      });
       navigate('/login');
     }
   };

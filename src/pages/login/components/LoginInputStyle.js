@@ -67,18 +67,11 @@ export const LoginButton = styled.button`
   }
 `;
 
-export const JoinGuide = styled.p`
-  text-align: center;
-  margin: 40px 0 24px;
-  @media (max-width: 780px) {
-    margin: 18px 0 18px;
-  }
-`;
-
 export const JoinButton = styled.button`
   outline: none;
   width: 100%;
   font-size: 18px;
+  margin-top: 16px;
   padding: 10px 0;
   color: #fff;
   background: #36474f;
@@ -91,5 +84,28 @@ export const JoinButton = styled.button`
   }
   @media (max-width: 780px) {
     font-size: 16px;
+  }
+`;
+
+export const JoinGuide = styled.p`
+  text-align: center;
+  margin: 40px 0 24px;
+  @media (max-width: 780px) {
+    margin: 18px 0 18px;
+  }
+`;
+
+export const GithubButton = styled.button`
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+
+  img {
+    display: block;
+    width: 50px;
   }
 `;

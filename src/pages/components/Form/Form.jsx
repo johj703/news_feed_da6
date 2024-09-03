@@ -53,8 +53,8 @@ const Form = ({ isModify }) => {
       .from('post')
       .update([
         {
-          author_name: user.user_metadata.display_name,
-          author_profile_url: user.user_metadata.profile_url,
+          author_name: user.user_metadata.display_name ?? user.user_metadata.user_name,
+          author_profile_url: user.user_metadata.profile_url ?? user.user_metadata.avatar_url,
           title: post.title,
           content: post.content,
           email: user.email,
@@ -84,8 +84,8 @@ const Form = ({ isModify }) => {
       .from('post')
       .insert([
         {
-          author_name: user.user_metadata.display_name,
-          author_profile_url: user.user_metadata.profile_url,
+          author_name: user.user_metadata.display_name ?? user.user_metadata.user_name,
+          author_profile_url: user.user_metadata.profile_url ?? user.user_metadata.avatar_url,
           title: post.title,
           content: post.content,
           email: user.email,

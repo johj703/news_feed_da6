@@ -98,7 +98,7 @@ const BookMark = () => {
 
   return (
     <>
-      {myArticle.data ? (
+      {myArticle.data && (
         <>
           <MyBoardList>
             {myArticle.data.map((item) => {
@@ -121,8 +121,6 @@ const BookMark = () => {
             </div>
           </Paging>
         </>
-      ) : (
-        <BlankBoard>북마크 게시글이 없습니다.</BlankBoard>
       )}
     </>
   );
