@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   BoardContainer,
   Table,
@@ -173,8 +173,10 @@ const Main = () => {
   // 페이지 변경 하는 함수
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  const navigate = useNavigate();
+
   const toWrite = () => {
-    Navigate('/write');
+    navigate('/write');
   };
 
   useEffect(() => {
