@@ -61,7 +61,7 @@ const Main = () => {
 
   const navigate = useNavigate();
 
-  // navigate를 사용해서 toWrite를 사용해서 write 페이지로 이동하도록 작성
+  // navigate를 사용해서 write 페이지로 이동하도록 작성
   const toWrite = () => {
     navigate('/write');
   };
