@@ -1,5 +1,11 @@
+import Form from '../components/Form/Form';
+
 const Write = () => {
-  return <div>글쓰기</div>;
+  return (
+    <>
+      <Form isModify={false} />
+    </>
+  );
 };
 
 export default Write;
