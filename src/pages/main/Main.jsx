@@ -18,11 +18,11 @@ import { useEffect, useState } from 'react';
 import { supabase } from './../../supabase/supabase';
 
 const Main = () => {
+  // 게시물 데이터, 로딩 상태, 페이지 번호, 현재 페이지 그룹 번호 state 관리
   const [posts, setPosts] = useState([]);
-  // 로딩 데이터 상태 관리
   const [loading, setLoading] = useState(true);
-  // 현재 페이지 상태 관리
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentPageGroup, setCurrentPageGroup] = useState(0);
 
   // 페이지 하나당 포스트의 개수는 10개인 상수 생성
   const postsPerPage = 10;
