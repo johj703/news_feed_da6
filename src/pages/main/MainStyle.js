@@ -67,7 +67,6 @@ export const Button = styled.button`
   border-radius: 5px;
   cursor: pointer;
   margin-bottom: 20px; /* 버튼, 테이블 간 간격 추가 */
-  /* align-self: flex-start; 버튼 좌측 정렬 */
   &:hover {
     background-color: #0056b3;
   }
