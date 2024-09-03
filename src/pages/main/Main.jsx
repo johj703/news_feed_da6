@@ -122,11 +122,11 @@ const Main = () => {
       {/* 게시물이 10개 이상일 때 페이지네이션을 렌더링 */}
       {posts.length > postsPerPage && (
         <PaginationContainer>
-          <PageButton onClick={handlePrevGroup} disabled={currentPageGroup === 1}>
+          <PageButton onClick={handlePrevGroup} disabled={currentGroup === 0}>
             &lt; {/* 왼쪽 화살표 */}
           </PageButton>
-          {[...Array(totalPages)].map((_, index) => {
-            const pageNumber = index + 1;
+          {[...Array(endPage - startPage + 1)].map((_, index) => {
+            const pageNumber = startPage + index;
             return (
               <PageButton
                 key={pageNumber}
@@ -137,7 +137,7 @@ const Main = () => {
               </PageButton>
             );
           })}
-          <PageButton onClick={handleNextGroup} disabled={currentPage === totalPages}>
+          <PageButton onClick={handleNextGroup} disabled={endPage === totalPages}>
             &gt; {/* 오른쪽 화살표 */}
           </PageButton>
         </PaginationContainer>
