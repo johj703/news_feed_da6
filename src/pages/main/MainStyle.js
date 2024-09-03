@@ -86,7 +86,12 @@ export const PageButton = styled.button`
   background-color: ${(props) => (props.isActive ? '#007bff' : 'white')};
   border: 1px solid #007bff;
   border-radius: 5px;
-  cursor: pointer;
+  ${({ disabled }) =>
+    disabled &&
+    `
+    pointer-events: none; /* 비활성화 상태에서 클릭 방지 */
+    opacity: 0.5; /* 비활성화된 버튼을 시각적으로 표시 */
+  `}
 
   &:hover {
     background-color: #0056b3;
