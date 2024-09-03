@@ -27,6 +27,21 @@ const LoginInput = () => {
       navigate('/');
     }
   };
+  // Github 로그인
+  const handleGithubLogin = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'github'
+    });
+    if (error) {
+      Swal.fire({
+        text: 'GitHub 로그인에 실패!',
+        icon: 'error',
+        confirmButtonText: '확인'
+      });
+    } else {
+      navigate('/');
+    }
+  };
 
   return (
     <InputContainer>
@@ -55,6 +70,7 @@ const LoginInput = () => {
         </div>
         <button type="submit">로그인</button>
       </form>
+      <button onClick={handleGithubLogin}>Github로 로그인</button>
       <p>계정이 없으신가요?</p>
       <button
         onClick={() => {
