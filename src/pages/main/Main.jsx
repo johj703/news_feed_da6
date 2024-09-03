@@ -32,11 +32,9 @@ const Main = () => {
   const totalPages = Math.ceil(posts.length / postsPerPage);
 
   // 현재 페이지에 해당하는 게시물 계산
-  // 1. 현재 페이지의 마지막 게시물 인덱스
   const indexOfLastPost = currentPage * postsPerPage;
-  // 2. 현재 페이지의 첫 번째 게시물 인덱스
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  // 3. 현재 페이지에 표시할 게시물 배열
+  // 현재 페이지에 표시할 게시물 배열
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
   // 페이지 변경 하는 함수(페이지 번호 클릭하면 해당 페이지로 이동)
@@ -63,7 +61,6 @@ const Main = () => {
   const readData = async () => {
     setLoading(true); /* 데이터를 불러올 때 로딩 상태로 전환 */
     const { data: post, error } = await supabase.from('post').select('*');
-    console.log(post);
     setPosts(post.reverse());
     setLoading(false); /* 데이터를 로딩 완료 후 로딩 상태 해제 */
   };
