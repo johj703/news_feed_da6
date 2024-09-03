@@ -19,6 +19,10 @@ import Comments from './components/comment/Comments';
 import { UserContext } from '../../context/UserConext';
 import bookmarkOff from '../../assets/bookmark-off.png';
 import bookmarkOn from '../../assets/bookmark-on.png';
+import codeSyntaxHighlightPlugin from '@toast-ui/editor-plugin-code-syntax-highlight';
+import Prism from 'prismjs';
+import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
+import 'prismjs/themes/prism.css';
 
 const Detail = () => {
   const [contents, setContents] = useState({});
@@ -105,7 +109,15 @@ const Detail = () => {
           </span>
         </UserInfoContainer>
 
-        <ContentArea>{contents.content && <Viewer className="viewer" initialValue={contents.content} />}</ContentArea>
+        <ContentArea>
+          {contents.content && (
+            <Viewer
+              className="viewer"
+              initialValue={contents.content}
+              plugins={[[codeSyntaxHighlightPlugin, { highlighter: Prism }]]}
+            />
+          )}
+        </ContentArea>
 
         <ButtonContainer>
           {user && (
