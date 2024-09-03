@@ -19,9 +19,9 @@ const Router = () => {
           <Route index element={<Main />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/write" element={<PrivateRoute el={<Write />} />} />
-          <Route path="/mypage" element={<PrivateRoute el={<Mypage />} />} />
-          <Route path="/mypage/mymodify" element={<PrivateRoute el={<Mymodify />} />} />
+          <Route path="/write" element={<PrivateRoute page={<Write />} />} />
+          <Route path="/mypage" element={<PrivateRoute page={<Mypage />} />} />
+          <Route path="/mypage/mymodify" element={<PrivateRoute page={<Mymodify />} />} />
           <Route
             path="/detail/:id"
             element={
@@ -30,7 +30,7 @@ const Router = () => {
               </CommentsProvider>
             }
           />
-          <Route path="/detail/:id/modify" element={<Modify />} />
+          <Route path="/detail/:id/modify" element={<PrivateRoute page={<Modify />} />} />
         </Route>
       </Routes>
     </BrowserRouter>
