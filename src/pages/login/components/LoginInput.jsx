@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { supabase } from '../../../supabase/supabase';
-import { InputContainer } from './LoginInputStyle';
+import { GithubButton, InputContainer } from './LoginInputStyle';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -70,7 +70,9 @@ const LoginInput = () => {
         </div>
         <button type="submit">로그인</button>
       </form>
-      <button onClick={handleGithubLogin}>Github로 로그인</button>
+      <GithubButton onClick={handleGithubLogin}>
+        <img src="/src/assets/github-mark.png" />
+      </GithubButton>
       <p>계정이 없으신가요?</p>
       <button
         onClick={() => {
