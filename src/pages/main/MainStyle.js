@@ -1,95 +1,154 @@
 import styled from 'styled-components';
 
 export const BoardContainer = styled.div`
-  width: 80%;
-  margin: 20px auto;
+  margin-top: 80px;
+  width: 100%;
+  @media (max-width: 780px) {
+    margin-top: 60px;
+  }
 `;
 
 export const Table = styled.table`
+  display: block;
   width: 100%;
-  border-collapse: collapse;
+  border-top: 4px solid #36474f;
+  tbody {
+    display: block;
+  }
 `;
 
 export const TableRow = styled.tr`
-  border-bottom: 1px solid #ddd;
-`;
-
-export const TableData = styled.td`
-  padding: 10px;
-  text-align: left;
-  vertical-align: top; /* 수직 정렬을 위쪽으로 */
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #36474f;
+  cursor: pointer;
+  @media (max-width: 780px) {
+    padding: 12px 0px;
+  }
 `;
 
 export const ImageCell = styled.td`
-  width: 50px; /* 이미지 셀의 넓이를 고정 */
-  padding: 10px;
-  text-align: center;
-  vertical-align: top;
+  flex-shrink: 0;
+  position: relative;
+  max-width: 88px;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 100%;
+    padding: 40.9% 0;
+  }
 `;
 
 export const ProfileImage = styled.img`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%; /* 원형으로 만들기 */
-  background-color: #ccc; /* 비어있는 이미지 배경을 회색으로 설정 */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+`;
+
+export const TableData = styled.td`
+  overflow: hidden;
 `;
 
 export const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 12px;
+  padding-left: 24px;
+  box-sizing: border-box;
+  @media (max-width: 780px) {
+    padding-left: 16px;
+    gap: 12px;
+  }
 `;
 
 export const TitleRow = styled.div`
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
   font-weight: bold;
-  margin-bottom: 5px; /* 제목과 아래 텍스트들 간의 간격 */
+  font-size: 18px;
 `;
 
 export const SubRow = styled.div`
-  color: #555;
-  font-size: 0.9em;
   display: flex;
-  justify-content: flex-start;
-  gap: 25px;
+  align-items: center;
+  gap: 12px;
+  span {
+    font-size: 14px;
+  }
 `;
 
 export const ButtonContainer = styled.div`
-  display: flex;
-  margin-top: 20px;
-  justify-content: flex-end;
+  margin-top: 40px;
+  text-align: right;
 `;
 
 export const Button = styled.button`
-  padding: 10px 15px;
+  width: 110px;
+  padding: 0;
+  border: 0;
+  outline: 0;
   font-size: 16px;
-  color: white;
-  background-color: #007bff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-bottom: 20px; /* 버튼, 테이블 간 간격 추가 */
+  line-height: 42px;
+  color: #fff;
+  border-radius: 8px;
+  text-align: center;
+  background: #608a46;
+  transition: 0.3s;
+
   &:hover {
-    background-color: #0056b3;
+    background-color: #407221;
   }
 `;
 
 export const PaginationContainer = styled.div`
   display: flex;
+  align-content: center;
   justify-content: center;
+  gap: 20px;
   margin-top: 20px;
+  @media (max-width: 780px) {
+    gap: 16px;
+    > div img {
+      width: 30px;
+    }
+  }
+
+  div.prev {
+    margin-right: 8px;
+  }
+
+  div.next {
+    margin-left: 8px;
+  }
 `;
 
 export const PageButton = styled.button`
-  padding: 8px 12px;
-  margin: 0 5px;
-  font-size: 16px;
-  color: ${(props) => (props.isActive ? 'white' : '#007bff')};
-  background-color: ${(props) => (props.isActive ? '#007bff' : 'white')};
-  border: 1px solid #007bff;
-  border-radius: 5px;
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  font-size: 24px;
+  line-height: 1;
+  text-decoration: none;
+  font-family: 'YoonChildfundkoreaDaeHan', sans-serif;
+  background: none;
+  border: 0;
+  border-bottom: ${(props) => (props.$isActive ? '2px solid #36474f' : 'none')};
 
-  &:hover {
-    background-color: #0056b3;
-    color: white;
+  @media (max-width: 780px) {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
   }
 `;

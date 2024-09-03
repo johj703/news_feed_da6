@@ -5,7 +5,7 @@ import { supabase } from '../../../../supabase/supabase';
 import { useParams } from 'react-router-dom';
 import { useComments } from '../../hooks/useComments';
 
-const CommentUpdateForm = ({ setIsUpdate, comment, isUpdate }) => {
+const CommentUpdateForm = ({ setIsUpdate, comment, $isUpdate }) => {
   const [updateComment, setUpdateComment] = useState('');
   const { user } = useContext(UserContext);
   const params = useParams();
@@ -41,20 +41,20 @@ const CommentUpdateForm = ({ setIsUpdate, comment, isUpdate }) => {
 
   return (
     <CommentInputForm
-      isUpdate={isUpdate}
+      $isUpdate={$isUpdate}
       onSubmit={(e) => {
         e.preventDefault();
         handleUpdateComment();
       }}
     >
       <CommentInput
-        isUpdate={isUpdate}
+        $isUpdate={$isUpdate}
         type="text"
         value={updateComment}
         onChange={(e) => setUpdateComment(e.target.value)}
         placeholder="댓글을 입력하세요"
       />
-      <CommentInputButton isUpdate={isUpdate} type="submit">
+      <CommentInputButton $isUpdate={$isUpdate} type="submit">
         수정
       </CommentInputButton>
     </CommentInputForm>

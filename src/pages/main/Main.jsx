@@ -16,6 +16,7 @@ import {
 } from './MainStyle';
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from './../../supabase/supabase';
+import noImage from '../../assets/no-image.png';
 
 const Main = () => {
   // 게시물 데이터, 로딩 상태, 페이지 번호, 현재 페이지 그룹 번호 state 관리
@@ -43,7 +44,10 @@ const Main = () => {
   const endPage = Math.min(startPage + pagesPerGroup - 1, totalPages);
 
   // 페이지 변경 하는 함수(페이지 번호 클릭하면 해당 페이지로 이동)
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber) => {
+    sessionStorage.setItem('mainPage', pageNumber);
+    setCurrentPage(pageNumber);
+  };
 
   // 이전 페이지 그룹으로 이동
   const handlePrevGroup = () => {
@@ -70,6 +74,12 @@ const Main = () => {
   const toDetail = (id) => {
     navigate(`/detail/${id}`);
   };
+
+  const nowPage = sessionStorage.getItem('mainPage');
+  //nowPage && setCurrentPage(nowPage);
+  useEffect(() => {
+    nowPage ? setCurrentPage(Number(nowPage)) : setCurrentPage(1);
+  }, [nowPage]);
 
   // 컴포넌트가 처음 렌더링 될 때, readData함수가 실행되도록 작성
   useEffect(() => {
@@ -103,9 +113,9 @@ const Main = () => {
             {currentPosts.map((post) => {
               return (
                 <TableRow key={post.uuid} onClick={() => toDetail(post.uuid)}>
-                  {/* 프로필 이미지를 나타내는 셀 */}
+                  {/* 썸네일 나타내는 셀 */}
                   <ImageCell>
-                    <ProfileImage src={post.thumbnail_url} alt="Profile" />
+                    <ProfileImage src={post.thumbnail_url ?? noImage} alt="Profile" />
                   </ImageCell>
 
                   {/* 게시물 내용을 나타내는 셀 */}
@@ -143,7 +153,7 @@ const Main = () => {
               <PageButton
                 key={pageNumber}
                 onClick={() => paginate(pageNumber)} /* 클릭 하면 해당 페이지로 이동 */
-                isActive={currentPage === pageNumber} /* 현재 페이지는 활성화 상태로 표시 */
+                $isActive={currentPage === pageNumber} /* 현재 페이지는 활성화 상태로 표시 */
               >
                 {pageNumber} {/* 페이지 번호 */}
               </PageButton>

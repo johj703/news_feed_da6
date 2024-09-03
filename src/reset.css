@@ -1,8 +1,22 @@
+@font-face {
+  font-family: 'YoonChildfundkoreaManSeh';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408@1.0/YoonChildfundkoreaManSeh.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'YoonChildfundkoreaDaeHan';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408@1.0/YoonChildfundkoreaDaeHan.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* box-sizing 규칙을 명시합니다. */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 /* 폰트 크기의 팽창을 방지합니다. */
@@ -10,6 +24,22 @@ html {
   -moz-text-size-adjust: none;
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
+}
+body {
+  margin: 0;
+  min-width: 340px;
+}
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+main {
+  width: 92%;
+  max-width: 1280px;
+
+  margin: 0 auto auto;
+  box-sizing: content-box;
 }
 
 /* 기본 여백을 제거하여 작성된 CSS를 더 잘 제어할 수 있습니다. */
@@ -76,6 +106,10 @@ button,
 textarea,
 select {
   font: inherit;
+}
+
+button {
+  cursor: pointer;
 }
 
 /* 행 속성이 없는 textarea가 너무 작지 않도록 합니다. */
