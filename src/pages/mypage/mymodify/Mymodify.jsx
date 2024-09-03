@@ -8,6 +8,7 @@ import {
   InnerBox,
   Input,
   InputWrapper,
+  LoadingImage,
   ModifyForm,
   PasswordChk,
   ProfileImage,
@@ -24,6 +25,8 @@ const Mymodify = () => {
   const [userInfo, setUserInfo] = useState(getUserData ? getUserData.user_metadata : {}); // Input value에 따라 사용자 정보 저장
   const [passwordChk, setPasswordChk] = useState(false); // 비밀번호 안내문구 none/block
   const [profileImage, setProfileImage] = useState(null);
+
+  const [imageLoading, setImageLoading] = useState(false);
 
   useEffect(() => {
     if (!getUserData) {
@@ -67,6 +70,7 @@ const Mymodify = () => {
   // 이미지 등록 했을 때
   const changeImage = async (e) => {
     setProfileImage(e.target.files[0]);
+    setImageLoading(true);
 
     // new_profile_url에 이미지 업로드
     await supabase.storage
@@ -83,6 +87,9 @@ const Mymodify = () => {
           ...userInfo,
           profile_url: data.publicUrl + '?version=' + crypto.randomUUID()
         });
+      })
+      .finally(() => {
+        setImageLoading(false);
       });
   };
 
@@ -104,8 +111,8 @@ const Mymodify = () => {
       // 유효성검사 실행
       Swal.fire({
         icon: 'error',
-        title: '아니 뭐함;',
-        text: '비밀번호 확인 다시 해보슈'
+        title: '정보 수정에 실패하였습니다.',
+        text: '비밀번호를 양식에 맞춰서 작성해주세요.'
       });
       return;
     }
@@ -129,19 +136,18 @@ const Mymodify = () => {
     });
 
     Swal.fire({
-      title: '정말 수정하시겠습니까?',
-      text: 'ㄹㅇ?',
+      title: '회원 정보를 수정하시겠습니까?',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: '수정 드가자',
-      cancelButtonText: '안할랭'
+      confirmButtonColor: '#407221',
+      cancelButtonColor: '#36474F',
+      confirmButtonText: '수정',
+      cancelButtonText: '취소'
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
           title: '수정 완료!',
-          text: '정보가 새로 갱신되었습니다.',
+          text: '회원님의 정보가 수정되었습니다.',
           icon: 'success'
         }).then(() => {
           return navigate('/mypage', { replace: true, state: { redirectedFrom: pathname } });
@@ -156,6 +162,7 @@ const Mymodify = () => {
       <ModifyForm onSubmit={dependSubmit}>
         <ProfileImageWrap>
           <ProfileImage>
+            {imageLoading ? <LoadingImage /> : undefined}
             <img src={userInfo.profile_url} alt="" />
           </ProfileImage>
 

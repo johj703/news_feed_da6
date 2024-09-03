@@ -10,7 +10,7 @@ const Header = () => {
 
   return (
     <HeaderInner>
-      <Link to="/">
+      <Link to="/" onClick={() => sessionStorage.clear()}>
         <img src={logo} alt="로고" />
       </Link>
 

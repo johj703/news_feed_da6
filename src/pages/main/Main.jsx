@@ -16,6 +16,7 @@ import {
 } from './MainStyle';
 import { useEffect, useState } from 'react';
 import { supabase } from './../../supabase/supabase';
+import noImage from '../../assets/no-image.png';
 
 const Main = () => {
   const [posts, setPosts] = useState([]);
@@ -39,7 +40,10 @@ const Main = () => {
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
   // 페이지 변경 하는 함수(페이지 번호 클릭하면 해당 페이지로 이동)
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber) => {
+    sessionStorage.setItem('mainPage', pageNumber);
+    setCurrentPage(pageNumber);
+  };
 
   // useNavigate 함수를 navigate 변수에 담기
   const navigate = useNavigate();
@@ -54,6 +58,12 @@ const Main = () => {
     navigate(`/detail/${id}`);
   };
 
+  const nowPage = sessionStorage.getItem('mainPage');
+  //nowPage && setCurrentPage(nowPage);
+  useEffect(() => {
+    nowPage ? setCurrentPage(Number(nowPage)) : setCurrentPage(1);
+  }, [nowPage]);
+
   // 컴포넌트가 처음 렌더링 될 때, readData함수가 실행되도록 작성
   useEffect(() => {
     readData();
@@ -64,7 +74,7 @@ const Main = () => {
   const readData = async () => {
     setLoading(true); /* 데이터를 불러올 때 로딩 상태로 전환 */
     const { data: post, error } = await supabase.from('post').select('*');
-    console.log(post);
+
     setPosts(post.reverse());
     setLoading(false); /* 데이터를 로딩 완료 후 로딩 상태 해제 */
   };
@@ -80,9 +90,9 @@ const Main = () => {
             {currentPosts.map((post) => {
               return (
                 <TableRow key={post.uuid} onClick={() => toDetail(post.uuid)}>
-                  {/* 프로필 이미지를 나타내는 셀 */}
+                  {/* 썸네일 나타내는 셀 */}
                   <ImageCell>
-                    <ProfileImage src={post.thumbnail_url} alt="Profile" />
+                    <ProfileImage src={post.thumbnail_url ?? noImage} alt="Profile" />
                   </ImageCell>
 
                   {/* 게시물 내용을 나타내는 셀 */}
@@ -105,13 +115,14 @@ const Main = () => {
         <Button onClick={toWrite}>글쓰기</Button>
       </ButtonContainer>
       {/* 게시물이 10개 이상일 때 페이지네이션을 렌더링 */}
-      {posts.length > 10 && (
+      {posts.length > 1 && (
         <PaginationContainer>
           {[...Array(totalPages)].map((_, index) => (
             <PageButton
+              className={index}
               key={index + 1}
               onClick={() => paginate(index + 1)} /* 클릭 하면 해당 페이지로 이동 */
-              isActive={currentPage === index + 1} /* 현재 페이지는 활성화 상태로 표시 */
+              $isActive={currentPage === index + 1} /* 현재 페이지는 활성화 상태로 표시 */
             >
               {index + 1} {/* 페이지 번호 */}
             </PageButton>

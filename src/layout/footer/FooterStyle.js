@@ -6,7 +6,7 @@ export const FooterInner = styled.footer`
   align-items: center;
   justify-content: space-between;
   gap: 32px;
-  padding: 24px;
+  padding: 40px 24px 24px;
   margin-top: 120px;
   background: #608a46;
   > img {
@@ -44,4 +44,17 @@ export const ContactList = styled.ul`
 export const CopyRight = styled.div`
   color: #fff;
   font-size: 12px;
+`;
+
+export const FixedBtn = styled.div`
+  z-index: 101;
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  > img {
+    cursor: pointer;
+  }
 `;

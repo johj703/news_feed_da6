@@ -1,97 +1,34 @@
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { BoardArea, InfoBox, MemberInfo, MyArticle, MyBoardList, MyPageWrap, Paging, ProfileImg } from './MypageStyle';
+import { Link, useNavigate } from 'react-router-dom';
+import { BoardArea, BoardTab, InfoBox, MemberInfo, MyPageWrap, ProfileImg } from './MypageStyle';
+
+import BookMark from './board/BookMark';
 import { useEffect, useState } from 'react';
-import { supabase } from '../../supabase/supabase';
-
-import prev from '../../assets/prev.png';
-import next from '../../assets/next.png';
-
-const maxPagingLength = 5; // 한 번에 보여 줄 페이징 개수
-const maxBoardLength = 5; // 한 번에 보여 줄 게시글 개수
-
-const initialBoard = {
-  data: null,
-  length: 1
-};
+import MyBoard from './board/MyBoard';
 
 const Mypage = () => {
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const nowBoardPage = searchParams.get('page') ? Number(searchParams.get('page')) : 1; // 현재 게시글 페이징 번호
 
-  const [pageOfPaging, setPageOfPaging] = useState(parseInt(nowBoardPage / maxPagingLength + 1)); // 페이징의 페이지..?
-
-  const [myArticle, setMyArticle] = useState(initialBoard); // 내가 쓴 게시글
+  const [showBoard, setShowBoard] = useState(<MyBoard />);
 
   const getUserData = JSON.parse(localStorage.getItem('userData'));
   const userInfo = getUserData?.user_metadata;
   const randomVersionProfile = userInfo?.profile_url; // 프로필 이미지 캐시이슈로 버전 랜덤으로 추가
 
-  // 게시글 가져오기
   useEffect(() => {
     if (!getUserData) {
       return navigate('/login', { replace: true });
     }
+  }, []);
 
-    const fetchData = async () => {
-      // 출력할 게시글 설정
-      await supabase
-        .from('post')
-        .select()
-        .eq('email', userInfo.email)
-        .then((res) => {
-          const length = res.data.length; // 게시글 개수
-          const nowListLast = length - maxBoardLength * (nowBoardPage - 1); // 보여질 게시글 마지막 번호
-          const nowListStart = nowListLast - maxBoardLength; // 보여질 게시글 시작 번호
-          const data = res.data.slice(nowListStart < 0 ? 0 : nowListStart, nowListLast).reverse(); // 최신글이 위로 올라오게 reverse
-
-          return { data, length: Math.ceil(length / maxBoardLength) };
-        })
-        .then((data) => {
-          // 게시글 state에 저장
-          data.length !== 0 && setMyArticle(data);
-        });
-    };
-    fetchData();
-  }, [searchParams]);
-
-  // 페이징 생성하기
-  const makePaging = (num) => {
-    let page = [];
-
-    let pagingLength = maxPagingLength * num;
-
-    const startPage = 1 + maxPagingLength * (num - 1); // 페이징 시작 번호
-    const lastPage = pagingLength > myArticle.length ? myArticle.length : pagingLength; // 페이징 마지막 번호
-
-    for (let i = startPage; i <= lastPage; i++) {
-      page.push(
-        <Link key={'page' + i} to={`/mypage?page=${i}`} className={nowBoardPage === i && 'nowPage'}>
-          {i}
-        </Link>
-      );
-    }
-    return page;
+  const handleMyBoard = () => {
+    setShowBoard(<MyBoard />);
+    let nowPage = sessionStorage.getItem('myBoard') ?? 1;
+    navigate('/mypage?page=' + nowPage);
   };
-
-  // 페이징 이전 버튼 클릭 시
-  const handleClickPrev = () => {
-    if (nowBoardPage === 1) return false;
-
-    if (nowBoardPage % maxPagingLength === 1) {
-      setPageOfPaging(pageOfPaging - 1);
-    }
-    setSearchParams({ page: nowBoardPage - 1 });
-  };
-
-  // 페이징 다음 버튼 클릭 시
-  const handleClickNext = () => {
-    if (nowBoardPage === myArticle.length) return false;
-    if (nowBoardPage === maxPagingLength * pageOfPaging) {
-      setPageOfPaging(pageOfPaging + 1);
-    }
-
-    setSearchParams({ page: nowBoardPage + 1 });
+  const handleBookMark = () => {
+    setShowBoard(<BookMark />);
+    let nowPage = sessionStorage.getItem('bookMark') ?? 1;
+    navigate('/mypage?page=' + nowPage);
   };
 
   return (
@@ -109,33 +46,27 @@ const Mypage = () => {
 
         <Link to="/mypage/mymodify">회원정보 수정</Link>
       </InfoBox>
-      {/* 내가 작성한 게시글 */}
-      {myArticle.data && (
-        <BoardArea>
-          <MyBoardList>
-            {myArticle.data.map((item) => {
-              const detailLink = `/detail/${item.uuid}`;
-              return (
-                <MyArticle key={item.uuid}>
-                  <Link to={detailLink}>
-                    {item.title} <span>{item.date.split('오')[0]}</span>
-                  </Link>
-                </MyArticle>
-              );
-            })}
-          </MyBoardList>
 
-          <Paging>
-            <div className="prev" onClick={handleClickPrev}>
-              <img src={prev} alt="이전 버튼" />
-            </div>
-            {makePaging(pageOfPaging)}
-            <div className="next" onClick={handleClickNext}>
-              <img src={next} alt="다음 버튼" />
-            </div>
-          </Paging>
-        </BoardArea>
-      )}
+      <BoardArea>
+        <BoardTab className={showBoard.type.name === 'BookMark' && 'bookmark'}>
+          <span
+            onClick={() => {
+              handleMyBoard();
+            }}
+          >
+            내가 작성한 게시글
+          </span>
+          <span
+            onClick={() => {
+              handleBookMark();
+            }}
+          >
+            북마크 게시글
+          </span>
+        </BoardTab>
+
+        {showBoard}
+      </BoardArea>
     </MyPageWrap>
   );
 };

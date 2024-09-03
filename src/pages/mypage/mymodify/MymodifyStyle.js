@@ -21,6 +21,7 @@ export const ModifyForm = styled.form`
 `;
 
 export const ProfileImageWrap = styled.div`
+  position: relative;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -32,6 +33,7 @@ export const ProfileImage = styled.div`
   align-items: center;
   justify-content: center;
   width: 65%;
+  border: 2px solid #36474f;
   border-radius: 100%;
   overflow: hidden;
   &:before {
@@ -118,7 +120,7 @@ export const InnerBox = styled.div`
   border: 3px solid #aaa;
   border-radius: 8px;
   @media (max-width: 780px) {
-    padding: 24px;
+    padding: 16px;
     gap: 16px;
   }
 `;
@@ -134,7 +136,7 @@ export const InputWrapper = styled.div`
     font-size: 28px;
     text-align: left;
     @media (max-width: 780px) {
-      font-size: 18px;
+      font-size: 16px;
     }
   }
 `;
@@ -153,14 +155,16 @@ export const Input = styled.input`
   @media (max-width: 780px) {
     height: 48px;
     font-size: 16px;
+    border-width: 2px;
   }
 `;
 
 export const PasswordChk = styled.span`
   display: ${(props) => props.display};
-  width: 100%;
-  text-align: right;
+  width: 71.7%;
+  text-align: left;
   margin-top: 8px;
+  margin-left: auto;
   color: red;
 `;
 
@@ -175,9 +179,24 @@ export const SubmitButton = styled.button`
   color: #fff;
   font-size: 20px;
   margin: 40px 0 0;
+  transition: 0.3s;
+
+  &:hover {
+    background-color: #305519;
+  }
   @media (max-width: 780px) {
     width: 100%;
-    line-height: 48px;
+    line-height: 42px;
     margin-top: 32px;
+    font-size: 18px;
   }
+`;
+
+export const LoadingImage = styled.div`
+  z-index: 10;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(3px);
 `;

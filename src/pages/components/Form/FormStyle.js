@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 export const FormContainer = styled.form`
-  width: 80%;
-  margin: 0 auto;
+  margin: 40px auto 0;
 `;
 export const RegisterButton = styled.button`
   margin-top: 10px;
@@ -13,6 +12,9 @@ export const RegisterButton = styled.button`
   background-color: ${(props) => (props.bgcolor === 'modify' ? '#36474F' : '#407221')};
   color: white;
   cursor: pointer;
+  @media (max-width: 780px) {
+    flex: 1;
+  }
 `;
 
 export const TitleInput = styled.input`
@@ -30,5 +32,6 @@ export const TitleInput = styled.input`
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
-  gap: 20px;
+  gap: 12px;
+  margin-top: 16px;
 `;

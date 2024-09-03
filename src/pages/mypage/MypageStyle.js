@@ -2,11 +2,14 @@ import styled from 'styled-components';
 
 export const MyPageWrap = styled.div`
   display: flex;
+  align-items: flex-start;
   gap: 50px;
-  margin: 80px auto;
+  min-height: 70vh;
+  padding: 80px 0 0;
 
   @media (max-width: 780px) {
     flex-direction: column;
+    gap: 40px;
   }
 `;
 
@@ -31,9 +34,15 @@ export const InfoBox = styled.div`
     padding: 7px 16px;
     border-radius: 8px;
     background: #36474f;
+    transition: 0.3s;
+
+    &:hover {
+      background-color: #2d383d;
+    }
   }
 
   @media (max-width: 780px) {
+    width: 100%;
     gap: 24px;
     a {
       font-size: 16px;
@@ -104,7 +113,44 @@ export const BoardArea = styled.div`
   }
 `;
 
-// 마이페이지 하단 : 게시글 박스 레이아웃
+export const BoardTab = styled.div`
+  position: relative;
+  display: flex;
+  border-radius: 8px;
+  background: #608a46;
+  margin-bottom: 24px;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    background: rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+  }
+  &.bookmark::before {
+    left: 50%;
+  }
+  span {
+    z-index: 1;
+    position: relative;
+    width: 50%;
+    padding: 12px 0;
+    font-size: 18px;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+
+    @media (max-width: 780px) {
+      font-size: 16px;
+    }
+  }
+`;
+
+// 게시글 박스 레이아웃
 export const MyBoardList = styled.ul`
   margin: 0;
   padding: 0;
@@ -114,7 +160,7 @@ export const MyBoardList = styled.ul`
 
 // 게시글 한 줄 씩
 export const MyArticle = styled.li`
-  padding: 24px;
+  padding: 16px;
   list-style: none;
 
   a {
@@ -129,8 +175,9 @@ export const MyArticle = styled.li`
     border-top: 2px solid #aaa;
   }
 
-@media (max-width: 780px) {
-  padding: 12px 16px
+  @media (max-width: 780px) {
+    padding: 12px 16px;
+  }
 `;
 
 export const Paging = styled.div`
@@ -139,6 +186,13 @@ export const Paging = styled.div`
   justify-content: center;
   gap: 20px;
   margin-top: 70px;
+  @media (max-width: 780px) {
+    gap: 16px;
+    margin-top: 40px;
+    > div img {
+      width: 30px;
+    }
+  }
 
   div.prev {
     margin-right: 8px;
@@ -161,6 +215,11 @@ export const Paging = styled.div`
 
     &.nowPage {
       border-bottom: 2px solid #36474f;
+    }
+    @media (max-width: 780px) {
+      width: 30px;
+      height: 30px;
+      font-size: 16px;
     }
   }
 `;

@@ -1,6 +1,15 @@
 import { useState } from 'react';
 import { supabase } from '../../../supabase/supabase';
-import { InputContainer } from './LoginInputStyle';
+import {
+  InputContainer,
+  Title,
+  LoginForm,
+  InputWrapper,
+  Input,
+  LoginButton,
+  JoinButton,
+  JoinGuide
+} from './LoginInputStyle';
 import { useNavigate } from 'react-router-dom';
 
 const LoginInput = () => {
@@ -26,20 +35,23 @@ const LoginInput = () => {
 
   return (
     <InputContainer>
-      <h1>로그인</h1>
-      <form onSubmit={handleLogin}>
-        <div>
-          <input
+      <Title>로그인</Title>
+
+      <LoginForm onSubmit={handleLogin}>
+        <InputWrapper>
+          <label htmlFor="">이메일</label>
+          <Input
             type="text"
-            placeholder="아이디"
+            placeholder="이메일"
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
             }}
           />
-        </div>
-        <div>
-          <input
+        </InputWrapper>
+        <InputWrapper>
+          <label htmlFor="">비밀번호</label>
+          <Input
             type="password"
             placeholder="비밀번호"
             value={password}
@@ -48,17 +60,18 @@ const LoginInput = () => {
               setPassword(e.target.value);
             }}
           />
-        </div>
-        <button type="submit">로그인</button>
-      </form>
-      <p>계정이 없으신가요?</p>
-      <button
+        </InputWrapper>
+        <LoginButton type="submit">로그인</LoginButton>
+      </LoginForm>
+      <JoinButton
         onClick={() => {
           navigate('/signup');
         }}
       >
         회원가입
-      </button>
+      </JoinButton>
+
+      <JoinGuide>SNS 로그인</JoinGuide>
     </InputContainer>
   );
 };

@@ -29,11 +29,16 @@ body {
   margin: 0;
   min-width: 340px;
 }
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 main {
+  width: 92%;
   max-width: 1280px;
-  min-height: 80vh;
-  padding: 0 4%;
-  margin: 0 auto;
+
+  margin: 0 auto auto;
   box-sizing: content-box;
 }
 
