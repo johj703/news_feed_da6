@@ -13,13 +13,10 @@ const Form = ({ isModify }) => {
     content: '',
     author_name: '',
     author_profile_url: '',
-    date: '',
     email: '',
     uuid: ''
   });
   const { user } = useContext(UserContext);
-
-  const today = new Date().toLocaleString();
 
   const navigate = useNavigate();
 
@@ -55,7 +52,6 @@ const Form = ({ isModify }) => {
         {
           author_name: user.user_metadata.display_name,
           author_profile_url: user.user_metadata.profile_url,
-          date: today,
           title: post.title,
           content: post.content,
           email: user.email,
@@ -86,7 +82,6 @@ const Form = ({ isModify }) => {
         {
           author_name: user.user_metadata.display_name,
           author_profile_url: user.user_metadata.profile_url,
-          date: today,
           title: post.title,
           content: post.content,
           email: user.email,

@@ -14,7 +14,7 @@ import {
   TitleRow,
   SubRow
 } from './MainStyle';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { supabase } from './../../supabase/supabase';
 
 const Main = () => {
@@ -63,11 +63,19 @@ const Main = () => {
 
   const readData = async () => {
     setLoading(true); /* 데이터를 불러올 때 로딩 상태로 전환 */
-    const { data: post, error } = await supabase.from('post').select('*');
+    const { data: post, error } = await supabase.from('post').select('*').order('created_at', { ascending: false });
+    if (error) {
+      console.error(error);
+      return;
+    }
     console.log(post);
-    setPosts(post.reverse());
+    setPosts(post);
     setLoading(false); /* 데이터를 로딩 완료 후 로딩 상태 해제 */
   };
+
+  const creationTimeConverter = useCallback((time) => {
+    return new Date(time).toLocaleString();
+  }, []);
 
   return (
     <BoardContainer>
@@ -91,7 +99,7 @@ const Main = () => {
                       <TitleRow>{post.title}</TitleRow>
                       <SubRow>
                         <span>{post.author_name}</span>
-                        <span>{post.date}</span>
+                        <span>{creationTimeConverter(post.created_at)}</span>
                       </SubRow>
                     </ContentContainer>
                   </TableData>
