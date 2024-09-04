@@ -71,11 +71,16 @@ export const ContentContainer = styled.div`
 `;
 
 export const TitleRow = styled.div`
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+  display: flex;
+  align-content: center;
   font-weight: bold;
   font-size: 18px;
+  gap: 8px;
+  > div {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
 `;
 
 export const SubRow = styled.div`
