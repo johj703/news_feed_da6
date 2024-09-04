@@ -11,7 +11,7 @@ const Comments = () => {
   const [commentInput, setCommentInput] = useState('');
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
-  const { comments, getComments, setComments } = useComments();
+  const { comments, getComments, setComments, count } = useComments();
 
   const handleAddComment = async () => {
     if (commentInput.length === 0) {
@@ -51,7 +51,7 @@ const Comments = () => {
   return (
     <div>
       <CommentsContainer>
-        <CommentTitle>댓글</CommentTitle>
+        <CommentTitle>댓글 [{count}]</CommentTitle>
         {comments.map((comment) => (
           <CommentItem key={comment.uuid} data={comment} setComments={setComments} />
         ))}

@@ -120,7 +120,11 @@ const Main = () => {
                   {/* 게시물 내용을 나타내는 셀 */}
                   <TableData>
                     <ContentContainer>
-                      <TitleRow>{post.title}</TitleRow>
+                      <TitleRow>
+                        <div>{post.title}</div>{' '}
+                        <span>{post.comment_count === 0 ? null : `[${post.comment_count}]`}</span>
+                      </TitleRow>
+
                       <SubRow>
                         <span>{post.author_name}</span>
                         <span>
