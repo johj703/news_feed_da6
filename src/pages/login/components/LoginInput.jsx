@@ -14,7 +14,7 @@ import {
 import gitIcon from '../../../assets/github-mark.png';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import GitImg from '../../../assets/github-mark.png';
+import gitIcon from '../../../assets/github-mark.png';
 
 const LoginInput = () => {
   const navigate = useNavigate();

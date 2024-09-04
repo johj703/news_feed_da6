@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-const PrivateRoute = ({ page }) => {
+const PrivateRoute = ({ page, errorMessage = '먼저 로그인 해주세요' }) => {
   const user = sessionStorage.getItem('isLogin');
   const navigate = useNavigate();
 
@@ -9,7 +9,7 @@ const PrivateRoute = ({ page }) => {
     return page;
   } else {
     Swal.fire({
-      text: '먼저 로그인 해주세요!',
+      text: errorMessage,
       icon: 'error',
       confirmButtonText: '확인'
     }).then(() => {

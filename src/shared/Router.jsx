@@ -30,7 +30,10 @@ const Router = () => {
               </CommentsProvider>
             }
           />
-          <Route path="/detail/:id/modify" element={<PrivateRoute page={<Modify />} />} />
+          <Route
+            path="/detail/:id/modify"
+            element={<PrivateRoute page={<Modify />} errorMessage="접근 권한이 없습니다." />}
+          />
         </Route>
       </Routes>
     </BrowserRouter>
