@@ -11,8 +11,7 @@ const Comments = () => {
   const [commentInput, setCommentInput] = useState('');
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
-  const { comments, getComments, setComments, count } = useComments();
-
+  const { comments, getComments, setComments, commentCount } = useComments();
   const handleAddComment = async () => {
     if (commentInput.length === 0) {
       alert('댓글을 입력해주세요.');
@@ -51,7 +50,7 @@ const Comments = () => {
   return (
     <div>
       <CommentsContainer>
-        <CommentTitle>댓글 [{count}]</CommentTitle>
+        <CommentTitle>댓글 [{commentCount}]</CommentTitle>
         {comments.map((comment) => (
           <CommentItem key={comment.uuid} data={comment} setComments={setComments} />
         ))}
