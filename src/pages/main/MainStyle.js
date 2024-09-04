@@ -8,6 +8,43 @@ export const BoardContainer = styled.div`
   }
 `;
 
+export const SearchBox = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 20%;
+  min-width: 200px;
+  margin: 0 0 24px auto;
+  border-bottom: 2px solid #36474f;
+`;
+export const SearchInput = styled.input`
+  width: 100%;
+  height: 40px;
+  border: 0;
+  padding: 0 40px 0 0;
+  outline: none;
+  font-size: 16px;
+`;
+
+export const SearchButton = styled.button`
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  border: 0;
+  background: none;
+  outline: none;
+  > img {
+    width: 30px;
+    height: 30px;
+  }
+`;
+
 export const Table = styled.table`
   display: block;
   width: 100%;

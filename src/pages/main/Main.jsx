@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   BoardContainer,
   ImageCell,
@@ -12,13 +12,23 @@ import {
   TableData,
   ContentContainer,
   TitleRow,
-  SubRow
+  SubRow,
+  SearchBox,
+  SearchInput,
+  SearchButton
 } from './MainStyle';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { supabase } from './../../supabase/supabase';
 import noImage from '../../assets/no-image.png';
+import { SearchContext } from '../../context/SearchContext';
+import searchIcon from '../../assets/search.svg';
+import Swal from 'sweetalert2';
 
 const Main = () => {
+  const { inputValue, setInputValue } = useContext(SearchContext);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const nowSearch = searchParams.get('search'); // 현재 검색어
+
   // 게시물 데이터, 로딩 상태, 페이지 번호, 현재 페이지 그룹 번호 state 관리
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -93,6 +103,7 @@ const Main = () => {
       console.error(error);
       return;
     }
+
     setPosts(post);
     setLoading(false);
   };
@@ -101,8 +112,76 @@ const Main = () => {
     return new Date(time).toLocaleString();
   }, []);
 
+  // 검색어 입력
+  const handleWriteSearch = (e) => {
+    if (e.target.value) {
+      setInputValue(e.target.value);
+    } else {
+      setInputValue('');
+
+      if (nowSearch) {
+        setSearchParams();
+        readData();
+      }
+    }
+  };
+
+  const handleSearchSubmit = async (key) => {
+    if (key === 'Enter') {
+      if (inputValue.length === 0) {
+        setTimeout(function () {
+          Swal.fire({
+            text: '검색어를 입력해주세요!',
+            icon: 'error',
+            confirmButtonText: '확인'
+          });
+        }, 10);
+      } else {
+        const { data: post, error } = await supabase.from('post').select('*').order('created_at', { ascending: false });
+        if (error) {
+          console.error(error);
+          return;
+        }
+
+        const searchPost = post.filter(
+          (item) => item.title.replaceAll(' ', '').indexOf(inputValue.replaceAll(' ', '')) !== -1
+        );
+
+        if (searchPost.length === 0) {
+          setTimeout(function () {
+            Swal.fire({
+              text: '일치하는 게시물이 없습니다.',
+              icon: 'error',
+              confirmButtonText: '확인'
+            });
+          }, 10);
+
+          return false;
+        } else {
+          setPosts(searchPost);
+          navigate(`/?search=${inputValue}`);
+        }
+      }
+    }
+  };
+
   return (
     <BoardContainer>
+      <SearchBox>
+        <SearchInput
+          type="text"
+          value={inputValue}
+          onChange={(e) => handleWriteSearch(e)}
+          onKeyDown={(e) => handleSearchSubmit(e.key)}
+        />
+        <SearchButton
+          onClick={() => {
+            handleSearchSubmit('Enter');
+          }}
+        >
+          <img src={searchIcon} alt="검색 아이콘" />
+        </SearchButton>
+      </SearchBox>
       {loading ? (
         <p>Loading 중 입니다</p>
       ) : (

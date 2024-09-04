@@ -1,17 +1,26 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 import { HeaderInner, MemberLink } from './HeaderStyle';
 import { useContext } from 'react';
 import { UserContext } from '../../context/UserConext';
 import { supabase } from '../../supabase/supabase';
+import { SearchContext } from '../../context/SearchContext';
 
 const Header = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const nowSearch = searchParams.get('search'); // 현재 검색어
+
   const userData = useContext(UserContext).user;
+  const { setInputValue } = useContext(SearchContext);
 
   const handleClickLogo = () => {
     sessionStorage.removeItem('mainPage');
     sessionStorage.removeItem('myBoard');
     sessionStorage.removeItem('bookMark');
+    if (nowSearch) {
+      setInputValue('');
+      setSearchParams(null);
+    }
   };
 
   return (
