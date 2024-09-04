@@ -97,7 +97,7 @@ const SignupInput = () => {
         icon: 'success',
         confirmButtonText: '확인'
       });
-      navigate('/login');
+      navigate('/');
     }
   };
   return (

@@ -11,6 +11,7 @@ import {
   JoinButton,
   JoinGuide
 } from './LoginInputStyle';
+import gitIcon from '../../../assets/github-mark.png';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import GitImg from '../../../assets/github-mark.png';
@@ -101,7 +102,7 @@ const LoginInput = () => {
 
       <JoinGuide>SNS 로그인</JoinGuide>
       <GithubButton onClick={handleGithubLogin}>
-        <img src={GitImg} />
+        <img src={gitIcon} />
       </GithubButton>
     </InputContainer>
   );
