@@ -121,7 +121,8 @@ const Main = () => {
                   <TableData>
                     <ContentContainer>
                       <TitleRow>
-                        {post.title} {post.comment_count === 0 ? null : `[${post.comment_count}]`}
+                        <div>{post.title}</div>{' '}
+                        <span>{post.comment_count === 0 ? null : `[${post.comment_count}]`}</span>
                       </TitleRow>
 
                       <SubRow>
