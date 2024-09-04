@@ -15,7 +15,7 @@ const Footer = () => {
   };
   const handleGoToBottom = () => {
     window.scrollTo({
-      top: window.outerHeight,
+      top: document.getElementById('root').scrollHeight,
       behavior: 'smooth'
     });
   };
